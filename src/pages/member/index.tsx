@@ -1,12 +1,16 @@
+import { GenericService } from "@/utils/GenericService";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
+const _service: GenericService = new GenericService();
+
 const index = () => {
   const [apiData, setApiData] = useState([]);
+  const [objTestById, setObjTestById] = useState(null)
 
-  const getApi = async () => {
+  const getApiList = async () => {
     try {
-      const response = await axios.get("http://localhost:7220/api/member");
+      const response = await _service.list("member");
 
       console.log(response);
       setApiData(response.data);
@@ -15,8 +19,21 @@ const index = () => {
     }
   };
 
+  const getApiById = async () => {
+    try {
+      const response = await _service.getBy("member", 1);
+
+      console.log(response);
+      setObjTestById(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  
+  }
+
   useEffect(() => {
-    getApi();
+    getApiList();
+    getApiById();
   }, []);
 
   return (
@@ -30,6 +47,12 @@ const index = () => {
           </div>
         );
       })}
+
+      <h1>Member By Id</h1>
+      <div>
+        <p>{objTestById?.id}</p>
+        <p>{objTestById?.firstName}</p>
+      </div>
     </>
   );
 };
