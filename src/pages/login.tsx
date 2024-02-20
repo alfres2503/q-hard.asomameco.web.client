@@ -22,16 +22,17 @@ const login = () => {
             </h1>
 
             <p className="text-3xl my-4">
-            ¡Uniendo lazos fuertes en el matrimonio para un camino más cercano y feliz!
+              ¡Vive Experiencias Inolvidables con Nosotros: Tu Destino, Nuestro
+              Compromiso!
             </p>
           </div>
           <div className="bottom-0 absolute p-4 text-center right-0 left-0 flex justify-center space-x-4">
-            <p className="mb-5 my-7">Aún no tienes una cuenta?</p>
+            <p className="mb-5 my-7">¿Aún no tienes una cuenta?</p>
             <a
               className="mb-5 hover:underline hover:text-gray-100 my-7"
               href="#"
             >
-             Registrate aqui!
+              Regístrate aqui!
             </a>
           </div>
         </div>
@@ -53,10 +54,10 @@ const login = () => {
                 alt="Asomameco Logo"
               />
             </h1>
-           
-           <p className="text-gray-400 my-2 mb-6">
-              Por favor inicia sesión en tu cuenta.
-            </p> 
+
+            <p className="text-gray-400 my-2 mb-6">
+              Por favor inicia sesión con tu cuenta.
+            </p>
             <LoginForm />
           </div>
         </div>
