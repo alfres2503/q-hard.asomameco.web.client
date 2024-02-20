@@ -1,5 +1,6 @@
 import { MemberContext, useMemberProvider } from "@/context/MemberContext";
 import React, { useContext, useEffect } from "react";
+import Sidebar from "@/components/Sidebar";
 
 const index = () => {
   const { currentMember } = useMemberProvider() as any;
@@ -9,7 +10,8 @@ const index = () => {
   }, [currentMember]);
 
   return (
-    <div>
+    <div className="w-full h-screen bg-back object-cover flex items-center">
+      <Sidebar/>
       <h1>Esto es una página de index, el usuario logeado es:</h1>
       {currentMember ? (
         <div>
