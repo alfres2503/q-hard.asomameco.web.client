@@ -30,22 +30,22 @@ const LoginForm = () => {
   return (
     <>
       <div className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto my-2 ">
-        <div className="pb-1 pt-1 flex items-center bg-black rounded-sm  ">
-          <FaEnvelope className="text-gray-400 m-4 block"></FaEnvelope>
+        <div className="pb-1 pt-1 flex items-center rounded-sm bg-[#052850] shadow-md ">
+          <FaEnvelope className="text-gray-100 m-4 block"></FaEnvelope>
           <input
             type="email"
             name="email"
             id="email"
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Correo Electrónico"
-            className="block w-full p-3 pl-1 text-lg rounded-sm bg-black  "
+            className="block w-full p-3 pl-1 text-lg rounded-sm bg-[#052850] focus:outline-none placeholder-gray-100"
           ></input>
         </div>
         <div className="pb-2 pt-4 "></div>
-        <div className="pb-1 pt-1 flex items-center bg-black rounded-sm">
-          <MdLockOutline className="text-gray-400 m-4 block"></MdLockOutline>
+        <div className="pb-1 pt-1 flex items-center bg-[#052850] rounded-sm shadow-md">
+          <MdLockOutline className="text-gray-100 m-4 block"></MdLockOutline>
           <input
-            className="block w-full p-3 pl-1 text-lg rounded-sm bg-black "
+            className="block w-full p-3 pl-1 text-lg rounded-sm bg-[#052850] focus:outline-none placeholder-gray-100"
             type="password"
             name="password"
             onChange={(e) => setPassword(e.target.value)}
@@ -58,7 +58,7 @@ const LoginForm = () => {
             <input
               type="checkbox"
               name="remember"
-              className="mr-1 accent-indigo-300 hover:accent-indigo-500"
+              className="mr-1 hover:accent-orange-400"
             ></input>
             Recuérdame
           </label>
@@ -69,9 +69,10 @@ const LoginForm = () => {
 
         <div className="px-4 pb-2 pt-4">
           <button
-            className="uppercase block w-full p-4 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none"
+            className="uppercase block w-full p-4 text-lg rounded-full bg-[#B96919] hover:bg-[#ab5f13] focus:outline-none" 
             onClick={logIn}
           >
+        
             Iniciar Sesión
           </button>
         </div>

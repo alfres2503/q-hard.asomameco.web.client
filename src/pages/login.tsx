@@ -1,19 +1,16 @@
 import LoginForm from "@/components/LoginForm";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import AsomamecoLogoLinea from "../img/LogoMoradoLimpioOsc (1).png";
+import AsomamecoLogoLinea from "../img/LogoOficialAsomamecoLimpioCorto.png";
 
 const login = () => {
   //Inicio componente login
   return (
     <>
-      <section className="min-h-screen flex items-stretch text-white bg-black">
+      <section className="min-h-screen flex items-stretch text-white  bg-[#012245] ">
         <div
-          className="lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center"
-          style={{
-            backgroundImage:
-              "url(https://images.unsplash.com/photo-1577495508048-b635879837f1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80)",
-          }}
+          className="lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center  bg-[url(../img/asking.jpg)]"
+        
         >
           <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
           <div className="w-full px-24 z-10">
@@ -22,8 +19,7 @@ const login = () => {
             </h1>
 
             <p className="text-3xl my-4">
-              ¡Vive Experiencias Inolvidables con Nosotros: Tu Destino, Nuestro
-              Compromiso!
+            ¿Eres maltratado por tu pareja? Aquí te comprendemos y apoyamos.
             </p>
           </div>
           <div className="bottom-0 absolute p-4 text-center right-0 left-0 flex justify-center space-x-4">
@@ -38,11 +34,8 @@ const login = () => {
         </div>
         <div className="lg:w-1/2 w-full flex items-center justify-center text-center md:px-16 px-0 z-0 background-color: black;">
           <div
-            className="absolute lg:hidden z-10 inset-0 bg-gray-500 bg-no-repeat bg-cover items-center"
-            style={{
-              backgroundImage:
-                "url(https://images.unsplash.com/photo-1577495508048-b635879837f1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80)",
-            }}
+            className="absolute lg:hidden z-10 inset-0 bg-gray-500 bg-no-repeat bg-cover items-center  bg-[url(../img/asking.jpg)]"
+           
           >
             <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
           </div>
@@ -55,7 +48,7 @@ const login = () => {
               />
             </h1>
 
-            <p className="text-gray-400 my-2 mb-6">
+            <p className="text-gray-200 my-2 mb-6">
               Por favor inicia sesión con tu cuenta.
             </p>
             <LoginForm />
