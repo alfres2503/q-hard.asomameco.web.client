@@ -2,7 +2,7 @@ import { MemberContext, useMemberProvider } from "@/context/MemberContext";
 import React, { useContext, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 
-const index = () => {
+const IndexPage = () => {
   const { currentMember } = useMemberProvider() as any;
 
   useEffect(() => {
@@ -10,8 +10,8 @@ const index = () => {
   }, [currentMember]);
 
   return (
-    <div className ="w-full h-screen bg-[url(../img/back.jpg)] bg-fixed bg-no-repeat bg-cover bg-center   object-cover flex items-center" >
-      <Sidebar/>
+    <div className="w-full h-screen bg-[url(../img/back.jpg)] bg-fixed bg-no-repeat bg-cover bg-center   object-cover flex items-center">
+      <Sidebar />
       <h1>Esto es una página de index, el usuario logeado es:</h1>
       {currentMember ? (
         <div>
@@ -28,4 +28,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default IndexPage;

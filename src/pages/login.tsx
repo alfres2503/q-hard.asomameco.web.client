@@ -3,15 +3,12 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import AsomamecoLogoLinea from "../img/LogoOficialAsomamecoLimpioCorto.png";
 
-const login = () => {
+const LoginPage = () => {
   //Inicio componente login
   return (
     <>
       <section className="min-h-screen flex items-stretch text-white  bg-[#012245] ">
-        <div
-          className="lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center  bg-[url(../img/asking.jpg)]"
-        
-        >
+        <div className="lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center  bg-[url(../img/asking.jpg)]">
           <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
           <div className="w-full px-24 z-10">
             <h1 className="text-5xl font-bold text-left tracking-wide">
@@ -19,7 +16,7 @@ const login = () => {
             </h1>
 
             <p className="text-3xl my-4">
-            ¿Eres maltratado por tu pareja? Aquí te comprendemos y apoyamos.
+              ¿Eres maltratado por tu pareja? Aquí te comprendemos y apoyamos.
             </p>
           </div>
           <div className="bottom-0 absolute p-4 text-center right-0 left-0 flex justify-center space-x-4">
@@ -33,10 +30,7 @@ const login = () => {
           </div>
         </div>
         <div className="lg:w-1/2 w-full flex items-center justify-center text-center md:px-16 px-0 z-0 background-color: black;">
-          <div
-            className="absolute lg:hidden z-10 inset-0 bg-gray-500 bg-no-repeat bg-cover items-center  bg-[url(../img/asking.jpg)]"
-           
-          >
+          <div className="absolute lg:hidden z-10 inset-0 bg-gray-500 bg-no-repeat bg-cover items-center  bg-[url(../img/asking.jpg)]">
             <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
           </div>
           <div className="w-full py-6 z-20">
@@ -59,4 +53,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default LoginPage;

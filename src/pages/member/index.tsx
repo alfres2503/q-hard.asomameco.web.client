@@ -1,12 +1,11 @@
 import { GenericService } from "@/utils/GenericService";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const _service: GenericService = new GenericService();
 
-const index = () => {
+const MembersPage = () => {
   const [apiData, setApiData] = useState([]);
-  const [objTestById, setObjTestById] = useState(null)
+  const [objTestById, setObjTestById] = useState(null);
 
   const getApiList = async () => {
     try {
@@ -28,8 +27,7 @@ const index = () => {
     } catch (error) {
       console.error(error);
     }
-  
-  }
+  };
 
   useEffect(() => {
     getApiList();
@@ -57,4 +55,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default MembersPage;
