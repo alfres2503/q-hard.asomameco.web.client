@@ -8,7 +8,7 @@ export default function App({ Component, pageProps }) {
       <MemberProvider>
         <Head>
           <title>Asomameco</title>
-          {/* <link rel="shortcut icon" href="/logo.svg" /> */}
+          <link rel="icon" href="/favicon.svg" />
         </Head>
         <Component {...pageProps} />
       </MemberProvider>
