@@ -10,7 +10,7 @@ const IndexPage = () => {
   }, [currentMember]);
 
   return (
-    <div className="w-full h-screen bg-[url(../img/back.jpg)] bg-fixed bg-no-repeat bg-cover bg-center   object-cover flex items-center">
+    <div className="w-full h-screen bg-fixed bg-no-repeat bg-cover bg-center   object-cover flex items-center">
       <Sidebar />
       <h1>Esto es una página de index, el usuario logeado es:</h1>
       {currentMember ? (
