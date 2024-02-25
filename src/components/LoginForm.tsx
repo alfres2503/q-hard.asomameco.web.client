@@ -4,7 +4,7 @@ import Router from "next/router";
 import React, { useContext, useState } from "react";
 import { FaEnvelope } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
-import Button from "./Button";
+import Button from "./common/Button";
 
 const authService = new AuthService();
 
@@ -54,7 +54,11 @@ const LoginForm = () => {
         </div>
         <div className="flex justify-between text-gray-400">
           <label className="my-7  hover:text-gray-100">
-            <input type="checkbox" name="remember" className="mr-1 hover:accent-orange-400"></input>
+            <input
+              type="checkbox"
+              name="remember"
+              className="mr-1 hover:accent-orange-400"
+            ></input>
             Recuérdame
           </label>
           <a className="mb-5 hover:underline hover:text-gray-100 my-7" href="#">
@@ -62,13 +66,12 @@ const LoginForm = () => {
           </a>
         </div>
 
-        <div className=" pb-2 pt-4">
-          <button
-            className="uppercase block w-full p-4 text-lg rounded-lg bg-[#B96919] hover:bg-[#ab5f13] focus:outline-none"
+        <div className="pb-2 pt-4">
+          <Button
+            text="Iniciar Sesión"
             onClick={logIn}
-          >
-            Iniciar Sesión
-          </button>
+            className="w-full p-4 text-lg"
+          ></Button>
         </div>
       </div>
     </>
