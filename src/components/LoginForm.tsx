@@ -20,6 +20,8 @@ const LoginForm = () => {
 
     const memberResponse = await authService.loginMember(member);
 
+
+
     if (memberResponse) {
       // Router.push("/");
       window.location.href = "/";
@@ -68,10 +70,9 @@ const LoginForm = () => {
 
         <div className="pb-2 pt-4">
           <Button
-            text="Iniciar Sesión"
             onClick={logIn}
             className="w-full p-4 text-lg"
-          ></Button>
+          >Iniciar sesión</Button>
         </div>
       </div>
     </>

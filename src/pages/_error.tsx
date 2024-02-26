@@ -35,15 +35,13 @@ const ErrorPage = () => {
         </div>
         <div className="flex flex-col gap-2 min-[400px]:flex-row">
           <Button
-            text="Página principal →"
             onClick={() => Router.push("/")}
             className="inline-flex h-10 items-center justify-center px-8 text-sm font-medium gap-1 transition-colors"
-          />
+          >Página principal →</Button>
           <Button
-            text="Contáctanos →"
             onClick={() => Router.push("/contact")}
             className="inline-flex h-10 items-center justify-center px-8 text-sm font-medium gap-1 transition-colors"
-          />
+          >Contáctanos →</Button>
         </div>
       </div>
     </>
