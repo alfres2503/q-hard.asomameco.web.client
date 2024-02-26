@@ -1,7 +1,5 @@
-import { useMemberProvider } from "@/context/MemberContext";
 import { AuthService } from "@/utils/AuthService";
-import Router from "next/router";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { FaEnvelope } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
 import Button from "./common/Button";
@@ -26,7 +24,7 @@ const LoginForm = () => {
     buttonIsEnabled = true;
 
     if (memberResponse) {
-    buttonIsEnabled = false;
+      buttonIsEnabled = false;
       // Router.push("/");
       window.location.href = "/";
     } else {
@@ -36,11 +34,11 @@ const LoginForm = () => {
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
-  }
+  };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
-  }
+  };
 
   return (
     <>
@@ -87,7 +85,9 @@ const LoginForm = () => {
             isDisabled={!buttonIsEnabled}
             onClick={logIn}
             className="w-full p-4 text-lg"
-          >Iniciar sesión</Button>
+          >
+            Iniciar sesión
+          </Button>
         </div>
       </div>
     </>

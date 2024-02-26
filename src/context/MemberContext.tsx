@@ -3,7 +3,7 @@ import { AuthService } from "@/utils/AuthService";
 
 export const MemberContext = createContext({});
 
-export const MemberProvider = ({ children }) => {
+export const MemberProvider = ({ children }: { children: React.ReactNode }) => {
   const authService = new AuthService();
   const [currentMember, setCurrentMember] = useState(null);
 
@@ -16,7 +16,7 @@ export const MemberProvider = ({ children }) => {
     }
   }, []);
 
-  const loginMember = async (member) => {
+  const loginMember = async (member: any) => {
     const loggedInMember = await authService.loginMember(member);
     setCurrentMember(loggedInMember);
   };

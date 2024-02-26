@@ -1,13 +1,5 @@
-import React, { FC, ReactNode } from "react";
-
-// tipo de dato de las propiedades del componente
-type ButtonProps = {
-  children: ReactNode;
-  onClick: () => void;
-  color?: "orange" | "blue";
-  className?: string;
-  isDisabled?: boolean;
-};
+import { ButtonProps } from "@/types/interfaces/ButtonProps";
+import React, { FC } from "react";
 
 // hay que agregar el tipo de dato de las propiedades del componente
 const Button: FC<ButtonProps> = ({

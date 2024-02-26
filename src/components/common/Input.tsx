@@ -1,15 +1,5 @@
-import React, { FC, ReactNode } from "react";
-
-type InputProps = {
-  onChange?: (e) => void;
-  type?: string;
-  name?: string;
-  placeholder?: string;
-  id?: string;
-  color?: "orange" | "blue" | "white";
-  className?: string;
-  isDisabled?: boolean;
-};
+import { InputProps } from "@/types/interfaces/InputProps";
+import React, { FC } from "react";
 
 // hay que agregar el tipo de dato de las propiedades del componente
 const Input: FC<InputProps> = ({
