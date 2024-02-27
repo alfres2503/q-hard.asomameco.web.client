@@ -1,8 +1,13 @@
 import { useMemberProvider } from "@/context/MemberContext";
 import React, { useContext, useEffect } from "react";
 import Image from "next/image";
+import Button from "@/components/common/Button";
+import { useRouter } from "next/router";
+import { FaFacebook, FaInstagram } from "react-icons/fa";
+import Footer from "@/components/Footer";
 
 const IndexPage = () => {
+  const router = useRouter();
   const { currentMember } = useMemberProvider() as any;
 
   useEffect(() => {
@@ -11,171 +16,182 @@ const IndexPage = () => {
 
   return (
     <>
-      <section className=" flex justify-center w-full py-12 md:py-24 lg:py-32 bg-gray-50/90">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
+      {/* 1. Hero (banner & support) */}
+      <div className="flex flex-col items-center w-full ">
+        {/* Hero section */}
+        <section className="w-full flex flex-col justify-center items-center bg-gradient-to-l  from-asomamecoDarkBlue-600 to-AsomamecoBlue-600 py-32 space-y-6 md:px-6 sm:px-8">
+          <img src="favicon.svg" alt="Banner" className="h-24 object-fill" />
+          <h1 className="text-white text-5xl font-bold text-center">
+            Asociación Maridos a Mecate Corto
+          </h1>
+        </section>
+        {/* No estas solo section */}
+        <section className="w-full p-4 md:p-6 sm:py-12 bg-black flex items-center justify-center">
+          <div className="container grid items-center gap-4 w-full text-center md:gap-6">
             <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                Break the Silence
+              <h1 className="text-3xl font-semibold text-gray-200 tracking-tighter sm:text-5xl md:text-6xl">
+                No estás solo
               </h1>
-              <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                Let's work together to end domestic violence. It starts with
-                awareness and understanding.
+              <p className="mx-auto max-w-2xl text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                Estamos aquí para ayudarte a encontrar tu camino a la libertad.
               </p>
             </div>
+            <Button
+              className="h-11 items-center w-full justify-center px-6 text-sm font-medium text-gray-50 shadow "
+              onClick={() => router.push("/support")}
+            >
+              Encuentra apoyo
+            </Button>
           </div>
-          <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
-            <Image
-              alt="Image"
-              className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-              height="310"
-              src="/images/asking.jpg"
-              width="550"
-            />
-            <div className="flex flex-col justify-center space-y-4">
-              <ul className="grid gap-6">
-                <li>
-                  <div className="grid gap-1">
-                    <h3 className="text-xl font-bold">Recognize the signs</h3>
-                    <p className="text-gray-500 dark:text-gray-400">
-                      Understanding the warning signs of an abusive
-                      relationship.
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <div className="grid gap-1">
-                    <h3 className="text-xl font-bold">Get help</h3>
-                    <p className="text-gray-500 dark:text-gray-400">
-                      Resources for those experiencing domestic violence.
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <div className="grid gap-1">
-                    <h3 className="text-xl font-bold">Support survivors</h3>
-                    <p className="text-gray-500 dark:text-gray-400">
-                      How to help those affected by domestic violence.
-                    </p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div className="flex justify-center items-center py-12 md:py-24 lg:py-32">
-        <div className="container grid items-center gap-4 px-4 text-center md:px-6 lg:gap-10">
-          <div className="space-y-3">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              You Deserve to be Safe
-            </h2>
-            <p className="mx-auto max-w-3xl text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Domestic violence is a pattern of abusive behavior in a
-              relationship that is used by one partner to gain or maintain power
-              and control over another partner.
-            </p>
-          </div>
-        </div>
+        </section>
       </div>
-      <div className="flex justify-center w-full py-6 md:py-12">
-        <div className="container grid items-center gap-4 px-4 text-center md:px-6">
-          <div className="space-y-2">
+
+      {/* 2. Real Stories */}
+      <div className="w-full py-12 lg:py-16">
+        <div className="container grid items-center gap-4 px-4 md:px-6">
+          <div className="space-y-2 text-center lg:space-y-4 lg:text-left">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Types of Abuse
+              Casos Reales
             </h2>
-            <p className="mx-auto max-w-[800px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Domestic violence can take many forms, including physical,
-              emotional, and financial abuse.
+            <p className="text-gray-500 md:text-xl/relaxed dark:text-gray-400">
+              Escucha a hombres que han encontrado salvación.
             </p>
           </div>
-          <div className="mx-auto max-w-[900px] grid grid-cols-1 items-start gap-4 md:grid-cols-3 md:items-center md:gap-8">
-            <div className="flex flex-col items-center gap-2">
-              <div className="grid w-16 h-16 rounded-full bg-gray-100 items-center justify-center">
-                <Image
-                  alt="Icon"
-                  height="50"
-                  src="/images/physicalAbuse.png"
-                  style={{
-                    aspectRatio: "32/32",
-                    objectFit: "cover",
-                  }}
-                  width="100"
-                />
+          <div className="grid gap-6 md:grid-cols-2 lg:gap-10">
+            <div className="flex flex-col gap-2">
+              <div className="space-y-2">
+                <h3 className="text-2xl font-bold tracking-tighter">
+                  Encontrando mi voz
+                </h3>
+                <p className="text-gray-500 dark:text-gray-400">
+                  Michael, 44 años
+                </p>
               </div>
-              <h3 className="text-xl font-bold">Physical Abuse</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Physical violence or aggression, including hitting, kicking, and
-                other forms of bodily harm.
+              <p className="text-gray-500 md:text-xl/relaxed dark:text-gray-400">
+                "Antes, mi esposa tomaba todas las decisiones importantes.
+                Incluso elegía mi sabor de helado. Gracias a la asociación,
+                ahora puedo decir con orgullo que he elegido fresa por primera
+                vez en años. ¡Recuperé el control, aunque sea sobre mi helado!"
               </p>
             </div>
-            <div className="flex flex-col items-center gap-2">
-              <div className="grid w-16 h-16 rounded-full bg-gray-100 items-center justify-center">
-                <Image
-                  alt="Icon"
-                  height="32"
-                  src="/images/emotional.png"
-                  style={{
-                    aspectRatio: "32/32",
-                    objectFit: "cover",
-                  }}
-                  width="50"
-                />
+            <div className="flex flex-col gap-2">
+              <div className="space-y-2">
+                <h3 className="text-2xl font-bold tracking-tighter">
+                  Un Nuevo Comienzo
+                </h3>
+                <p className="text-gray-500 dark:text-gray-400">
+                  Anibal, 21 años
+                </p>
               </div>
-              <h3 className="text-xl font-bold">Emotional Abuse</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Psychological abuse, such as intimidation, gaslighting, and
-                verbal attacks designed to undermine the victim's self-esteem.
-              </p>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <div className="grid w-16 h-16 rounded-full bg-gray-100 items-center justify-center">
-                <Image
-                  alt="Icon"
-                  height="32"
-                  src="/images/financialAbuse.png"
-                  style={{
-                    aspectRatio: "32/32",
-                    objectFit: "cover",
-                  }}
-                  width="50"
-                />
-              </div>
-              <h3 className="text-xl font-bold">Financial Abuse</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Controlling the victim's access to financial resources, such as
-                money, bank accounts, and employment.
+              <p className="text-gray-500 md:text-xl/relaxed dark:text-gray-400">
+                "Gracias a la asociación, aprendí a establecer límites de manera
+                saludable. Antes mi pareja elegía mi corte de pelo, mi ropa y
+                hasta mis amigos. Ahora, decido mi propio estilo y hasta tengo
+                un amigo al que ella no eligió por mí. ¡Es un gran paso!"
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      <section className=" flex justify-center items-centerpy-12 lg:py-24  bg-gray-50/90">
-        <div className="container grid items-start gap-4 px-4 md:px-6 lg:gap-10 lg:grid-cols-2 xl:gap-16">
-          <div className="flex flex-col justify-center space-y-4">
-            <div className="space-y-4">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl xl:text-6xl/none">
-                Get Help
-              </h2>
-              <p className="max-w-prose text-gray-500 md:text-xl dark:text-gray-400">
-                If you are a victim of domestic violence, it is important to
-                seek help as soon as possible. There are many organizations...
+      {/* 3. Upcoming Events */}
+      <div className="w-full py-6 lg:py-16 bg-gradient-to-r  from-asomamecoDarkBlue-900 to-AsomamecoBlue-600">
+        <div className="container grid items-center gap-4 px-4 md:px-6">
+          <div className="space-y-2 text-center lg:space-y-4 lg:text-left">
+            <h2 className=" text-gray-200 text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+              Próximos Eventos
+            </h2>
+            <p className="text-gray-500 md:text-xl/relaxed dark:text-gray-400">
+              Únete a nuestros talleres y discusiones.
+            </p>
+          </div>
+          <div className="grid gap-4 md:gap-6 lg:gap-8">
+            <div className="flex flex-col gap-1">
+              <h3 className="text-2xl text-gray-200 font-semibold tracking-tighter">
+                • Taller: "Recuperando la Sala de Estar"
+              </h3>
+              <p className="text-gray-500 dark:text-gray-400">
+                15 de marzo, 2024
+              </p>
+              <p className="text-gray-500 dark:text-gray-400">
+                ¿Tu esposa ha tomado el control del televisor y la decoración?
+                ¡Es hora de recuperar tu espacio! En este taller, aprenderás
+                estrategias ingeniosas para negociar el control remoto y cómo
+                agregar toques masculinos a la sala de estar. ¡Deshazte de las
+                almohadas decorativas en exceso y recupera el dominio de tu
+                territorio!
+              </p>
+            </div>
+            <div className="flex flex-col gap-1">
+              <h3 className="text-2xl text-gray-200 font-semibold tracking-tighter">
+                • Evento: "Noche de Risas para Hombres Empoderados"
+              </h3>
+              <p className="text-gray-500 dark:text-gray-400">
+                5 de abril, 2024
+              </p>
+              <p className="text-gray-500 dark:text-gray-400">
+                ¿Necesitas un respiro divertido? Únete a nuestra "Noche de Risas
+                para Hombres Empoderados". Comediantes expertos te guiarán a
+                través de situaciones cotidianas con las que muchos hombres se
+                identifican, ofreciendo una perspectiva humorística sobre la
+                vida en pareja. ¡Prepárate para liberar esas risas reprimidas!
+              </p>
+            </div>
+            <div className="flex flex-col gap-1">
+              <h3 className="text-2xl text-gray-200 font-semibold tracking-tighter">
+                • Taller: "Hombres al Mando de la Barbacoa"
+              </h3>
+              <p className="text-gray-500 dark:text-gray-400">
+                22 de abril, 2024
+              </p>
+              <p className="text-gray-500 dark:text-gray-400">
+                ¿Sientes que has perdido el control de las parrillas?
+                ¡Recupéralo en nuestro taller exclusivo! Descubre secretos para
+                preparar las mejores carnes a la parrilla y aprende a manejar
+                las herramientas de la barbacoa como un verdadero líder. ¡No más
+                debates sobre la sazón, toma el control de tus brasas!
               </p>
             </div>
           </div>
-          <div className="flex items-center space-y-4 lg:order-last">
-            <Image
-              alt="Hero"
-              className="aspect-[2/1] rounded-lg object-cover"
-              height="300"
-              src="/images/help.jpg"
-              width="600"
-            />
+        </div>
+      </div>
+
+      {/* 4. Connect with Us */}
+      <div className="w-full py-12 lg:py-16">
+        <div className="container grid items-center gap-4 px-4 md:px-6">
+          <div className="space-y-2 text-center lg:space-y-4 lg:text-left">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+              Conéctate con Nosotros
+            </h2>
+            <p className="text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+              Síguenos en redes sociales para actualizaciones e inspiración.
+            </p>
+          </div>
+          <div className="flex flex-col gap-2 min-[400px]:flex-row">
+            <div className="grid gap-2 min-[400px]:flex-row">
+              <Button
+                className=" text-white inline-flex h-10 items-center px-4 text-sm font-medium gap-2 "
+                color="blue"
+                onClick={() => router.push("#")}
+              >
+                <FaInstagram className="h-4 w-4" />
+                Instagram
+              </Button>
+              <Button
+                className=" text-white inline-flex h-10 items-center px-4 text-sm font-medium gap-2"
+                color="blue"
+                onClick={() => router.push("#")}
+              >
+                <FaFacebook className="h-4 w-4" />
+                Facebook
+              </Button>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
+
+      {/* 5. Footer */}
+      <Footer></Footer>
     </>
   );
 };

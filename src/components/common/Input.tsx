@@ -14,10 +14,10 @@ const Input: FC<InputProps> = ({
 }) => {
   const buttonColor =
     color === "orange"
-      ? "bg-[#FF6A00] text-white"
+      ? "bg-asomamecoPrimary text-white"
       : color === "blue"
-      ? "bg-[#052850] text-white"
-      : "bg-white text-[#052850]";
+      ? "bg-asomamecoDarkBlue text-white"
+      : "bg-white text-gray-800";
 
   const classes = `rounded-lg focus:outline-none placeholder-gray-100 ${buttonColor} ${className}`;
 
@@ -33,6 +33,7 @@ const Input: FC<InputProps> = ({
         onChange={onChange}
         id={id}
         placeholder={placeholder}
+        disabled={isDisabled}
       ></input>
     </>
   );

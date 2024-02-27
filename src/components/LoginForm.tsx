@@ -43,7 +43,7 @@ const LoginForm = () => {
   return (
     <>
       <div className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto my-2 ">
-        <div className="pb-1 pt-1 flex items-center rounded-lg bg-[#052850]">
+        <div className="pb-1 pt-1 flex items-center rounded-lg bg-asomamecoDarkBlue">
           <FaEnvelope className="text-gray-100 m-4 block"></FaEnvelope>
           <Input
             type="email"
@@ -55,7 +55,7 @@ const LoginForm = () => {
           ></Input>
         </div>
         <div className="pb-2 pt-4 "></div>
-        <div className="pb-1 pt-1 flex items-center bg-[#052850] rounded-lg ">
+        <div className="pb-1 pt-1 flex items-center bg-asomamecoDarkBlue rounded-lg ">
           <MdLockOutline className="text-gray-100 m-4 block"></MdLockOutline>
           <Input
             className="w-full p-3 pl-1 text-lg"

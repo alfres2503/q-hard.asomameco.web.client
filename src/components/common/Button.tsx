@@ -14,7 +14,7 @@ const Button: FC<ButtonProps> = ({
       ? "bg-asomamecoDarkBlue hover:bg-asomamecoDarkBlue-700"
       : "bg-asomamecoDarkOrange hover:bg-asomamecoDarkOrange-700";
 
-  const classes = `uppercase  rounded-lg focus:outline-none ${buttonColor} ${className}`;
+  const classes = `uppercase transition-colors rounded-lg focus:outline-none ${buttonColor} ${className}`;
 
   return (
     <button className={classes} onClick={onClick} disabled={isDisabled}>

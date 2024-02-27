@@ -12,7 +12,7 @@ const LoginPage = () => {
         <meta name="description" content="Inicia sesión en Asomameco" />
       </Head>
 
-      <section className="min-h-screen flex items-stretch text-white  bg-[#012245]  ">
+      <section className="min-h-screen flex items-stretch text-white  bg-asomamecoDarkBlue-800  ">
         <div className="lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center bg-[url(../../public/images/asking.jpg)]  ">
           <div className="absolute bg-black opacity-60 inset-0 z-0 "></div>
           <div className="w-full px-20 z-10 ">
