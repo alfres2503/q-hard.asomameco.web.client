@@ -9,10 +9,10 @@ export class AuthService {
     try {
       const response = await axios.post(this.APIUrl + "auth", member);
 
-      localStorage.setItem("token", response.data.data.token);
+      localStorage.setItem("token", response.data.token);
       localStorage.setItem(
         "currentMember",
-        JSON.stringify(response.data.data.member)
+        JSON.stringify(response.data.member)
       );
 
       return member;
