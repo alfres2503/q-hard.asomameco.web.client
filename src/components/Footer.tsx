@@ -6,8 +6,8 @@ const Footer = () => {
 
   return (
     <footer className="border-t">
-      <div className="container grid items-center justify-center gap-4 min-h-[200px] px-4 py-4 text-center md:gap-6 md:px-6 md:grid-cols-2 lg:min-h-[100px]">
-        <p className="text-sm text-gray-600">
+      <div className="grid items-center justify-center gap-4 min-h-[200px] px-4 py-4 text-center md:gap-6 md:px-6 md:grid-cols-2 lg:min-h-[100px]">
+        <p className="text-sm text-gray-400">
           © {currentYear} Asomameco. Todos los derechos reservados.
         </p>
         <nav className="flex items-center justify-center space-x-4 text-sm">
