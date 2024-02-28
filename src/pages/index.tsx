@@ -1,10 +1,12 @@
 import { useMemberProvider } from "@/context/MemberContext";
 import React, { useContext, useEffect } from "react";
-import Image from "next/image";
 import Button from "@/components/common/Button";
 import { useRouter } from "next/router";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import Footer from "@/components/Footer";
+
+import { RiDoubleQuotesL } from "react-icons/ri";
+import { MdEvent } from "react-icons/md";
 
 const IndexPage = () => {
   const router = useRouter();
@@ -16,104 +18,127 @@ const IndexPage = () => {
 
   return (
     <>
+      
       {/* 1. Hero (banner & support) */}
-      <div className="flex flex-col items-center w-full ">
-        {/* Hero section */}
-        <section className="w-full flex flex-col justify-center items-center bg-gradient-to-l  from-asomamecoDarkBlue-600 to-AsomamecoBlue-600 py-32 space-y-6 md:px-6 sm:px-8">
-          <img src="favicon.svg" alt="Banner" className="h-24 object-fill" />
-          <h1 className="text-white text-5xl font-bold text-center">
-            Asociación Maridos a Mecate Corto
-          </h1>
-        </section>
-        {/* No estas solo section */}
-        <section className="w-full p-4 md:p-6 sm:py-12 bg-black flex items-center justify-center">
-          <div className="container grid items-center gap-4 w-full text-center md:gap-6">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-semibold text-gray-200 tracking-tighter sm:text-5xl md:text-6xl">
+      <div className="p-10 w-full overflow-hidden justify-center items-start bg-gradient-to-l  from-asomamecoDarkBlue-600 to-AsomamecoBlue-600">
+        <section id="Home" className="  flex md:flex-row flex-col sm:py-16 py-6">
+          {/* No estas solo section */}
+          <div className="flex-1 flex justify-center items-start flex-col xl:px-0 sm:px-16 px-6">
+            <div className="flex flex-row justify-between items-center w-full">
+              <h1 className=" flex-1 ss:text-[72px] text-[52px] ss:leading-[100.8px] leading-[75px] font-semibold text-gray-200">
                 No estás solo
               </h1>
-              <p className="mx-auto max-w-2xl text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                Estamos aquí para ayudarte a encontrar tu camino a la libertad.
-              </p>
             </div>
-            <Button
-              className="h-11 items-center w-full justify-center px-6 text-sm font-medium text-gray-50 shadow "
-              onClick={() => router.push("/support")}
-            >
-              Encuentra apoyo
-            </Button>
+            <p className="max-w-2xl text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+              Estamos aquí para ayudarte a encontrar tu camino a la libertad.
+            </p>
+            <div>
+              <Button
+                className="h-11 items-center w-full justify-center px-6 text-sm font-medium text-gray-50 shadow max-w-[470px] mt-5 "
+                onClick={() => router.push("/support")}
+              >
+                Encuentra apoyo
+              </Button>
+            </div>
+          </div>
+
+          {/* Hero section */}
+          <div className={`flex-1 flex justify-center items-center md:my-0 my-10 relative`}>
+            <img src="Logo.svg" alt="billing" className="w-[100%] h-[100%] relative z-[5]" />
           </div>
         </section>
       </div>
 
       {/* 2. Real Stories */}
-      <div className="w-full py-12 lg:py-16">
-        <div className="container grid items-center gap-4 px-4 md:px-6">
-          <div className="space-y-2 text-center lg:space-y-4 lg:text-left">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+      <div className="p-10 w-full overflow-hidden justify-center items-start">
+        <section id="clients" className={`sm:py-16 py-6 flex justify-center items-center flex-col relative `}>
+          <div className="absolute z-[0] w-[60%] h-[60%] -right-[50%] rounded-full blue__gradient bottom-40" />
+
+          <div className="w-full flex justify-between items-center md:flex-row flex-col sm:mb-16 mb-6 relative z-[1]">
+            <h2 className=" text-3xl tracking-tighter sm:text-4xl md:text-5xl font-semibold xs:text-[48px] text-[40px] xs:leading-[76.8px] leading-[66.8px] w-full">
               Casos Reales
             </h2>
-            <p className="text-gray-500 md:text-xl/relaxed dark:text-gray-400">
-              Escucha a hombres que han encontrado salvación.
-            </p>
+            <div className="w-full md:mt-0 mt-6">
+              <p className={`font-normal text-dimWhite text-[18px] leading-[30.8px] text-left max-w-[450px]`}>
+                Escucha a hombres que han encontrado salvación.
+              </p>
+            </div>
           </div>
-          <div className="grid gap-6 md:grid-cols-2 lg:gap-10">
-            <div className="flex flex-col gap-2">
-              <div className="space-y-2">
-                <h3 className="text-2xl font-bold tracking-tighter">
-                  Encontrando mi voz
-                </h3>
-                <p className="text-gray-500 dark:text-gray-400">
-                  Michael, 44 años
-                </p>
-              </div>
-              <p className="text-gray-500 md:text-xl/relaxed dark:text-gray-400">
+          
+          <div className="flex flex-wrap sm:justify-start justify-center w-full feedback-container relative z-[1]">
+            {/* CASO 1 */}
+            <div className="flex justify-between flex-col px-10 py-12 rounded-[20px] hover:bg-gradient-to-b  from-asomamecoLightOrange-800 to-transparent delay-200 max-w-[650px] md:mr-10 sm:mr-5 mr-0 my-5 feedback-card">
+              <RiDoubleQuotesL className="w-[60px] h-[60px] object-contain" />
+              <p className=" font-normal text-[18px] leading-[32.4px]">
                 "Antes, mi esposa tomaba todas las decisiones importantes.
                 Incluso elegía mi sabor de helado. Gracias a la asociación,
                 ahora puedo decir con orgullo que he elegido fresa por primera
                 vez en años. ¡Recuperé el control, aunque sea sobre mi helado!"
               </p>
-            </div>
-            <div className="flex flex-col gap-2">
-              <div className="space-y-2">
-                <h3 className="text-2xl font-bold tracking-tighter">
-                  Un Nuevo Comienzo
-                </h3>
-                <p className="text-gray-500 dark:text-gray-400">
-                  Anibal, 21 años
-                </p>
+
+              <div className="flex flex-row">
+                <div className="flex flex-col ml-4">
+                  <h4 className=" font-semibold text-[20px] leading-[32px] ">
+                    Michael, 44 años
+                  </h4>
+                  <p className=" font-normal text-[16px] leading-[24px] text-dimWhite">
+                    Encontrando mi voz
+                  </p>
+                </div>
               </div>
-              <p className="text-gray-500 md:text-xl/relaxed dark:text-gray-400">
+            </div>
+
+            {/* CASO 2 */}
+            <div className="flex justify-between flex-col px-10 py-12 rounded-[20px] hover:bg-gradient-to-b  from-asomamecoLightOrange-800 to-transparent delay-200 max-w-[650px] md:mr-10 sm:mr-5 mr-0 my-5 feedback-card">
+              <RiDoubleQuotesL className="w-[60px] h-[60px] object-contain" />
+              <p className="font-normal text-[18px] leading-[32.4px]  my-10">
                 "Gracias a la asociación, aprendí a establecer límites de manera
                 saludable. Antes mi pareja elegía mi corte de pelo, mi ropa y
                 hasta mis amigos. Ahora, decido mi propio estilo y hasta tengo
                 un amigo al que ella no eligió por mí. ¡Es un gran paso!"
               </p>
+
+              <div className="flex flex-row">
+                <div className="flex flex-col ml-4">
+                  <h4 className=" font-semibold text-[20px] leading-[32px] ">
+                    Anibal, 21 años
+                  </h4>
+                  <p className=" font-normal text-[16px] leading-[24px] text-dimWhite">
+                    Un Nuevo Comienzo
+                  </p>
+                </div>
+              </div>
             </div>
+
           </div>
-        </div>
+
+        </section>
       </div>
 
       {/* 3. Upcoming Events */}
-      <div className="w-full py-6 lg:py-16 bg-gradient-to-r  from-asomamecoDarkBlue-900 to-AsomamecoBlue-600">
-        <div className="container grid items-center gap-4 px-4 md:px-6">
-          <div className="space-y-2 text-center lg:space-y-4 lg:text-left">
-            <h2 className=" text-gray-200 text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Próximos Eventos
-            </h2>
-            <p className="text-gray-500 md:text-xl/relaxed dark:text-gray-400">
-              Únete a nuestros talleres y discusiones.
-            </p>
-          </div>
-          <div className="grid gap-4 md:gap-6 lg:gap-8">
-            <div className="flex flex-col gap-1">
-              <h3 className="text-2xl text-gray-200 font-semibold tracking-tighter">
-                • Taller: "Recuperando la Sala de Estar"
-              </h3>
+      <div className="p-10 w-full overflow-hidden justify-center items-start bg-gradient-to-r  from-asomamecoDarkBlue-900 to-AsomamecoBlue-600">
+        <div className="space-y-2 text-center lg:space-y-4 lg:text-left">
+          <h2 className=" text-gray-200 text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+            Próximos Eventos
+          </h2>
+          <p className="text-gray-500 md:text-xl/relaxed dark:text-gray-400">
+            Únete a nuestros talleres y discusiones.
+          </p>
+        </div>
+        {/* EVENTO 1 */}
+        <div className={`flex-1 flex justify-center items-center md:ml-10 ml-0 md:mt-0 mt-10 relative flex-col`}>
+          <div className={`flex flex-row p-6 rounded-[20px] mb-6 feature-card`}>
+            <div className={`w-[64px] h-[64px] rounded-full flex justify-center items-center bg-dimBlue`}>
+              <MdEvent className=" w-[50%] h-[50%] object-contain" color="orange" />
+            </div>
+            <div className="flex-1 flex flex-col ml-3">
+              <h4 className=" font-semibold text-white text-[18px] leading-[23.4px] mb-1">
+                Taller: "Recuperando la Sala de Estar"
+              </h4>
               <p className="text-gray-500 dark:text-gray-400">
                 15 de marzo, 2024
               </p>
-              <p className="text-gray-500 dark:text-gray-400">
+              <p className="text-gray-500 dark:text-gray-400 font-normal text-dimWhite text-[16px] leading-[24px]">
                 ¿Tu esposa ha tomado el control del televisor y la decoración?
                 ¡Es hora de recuperar tu espacio! En este taller, aprenderás
                 estrategias ingeniosas para negociar el control remoto y cómo
@@ -122,14 +147,23 @@ const IndexPage = () => {
                 territorio!
               </p>
             </div>
-            <div className="flex flex-col gap-1">
-              <h3 className="text-2xl text-gray-200 font-semibold tracking-tighter">
-                • Evento: "Noche de Risas para Hombres Empoderados"
-              </h3>
+          </div>
+        </div>
+
+        {/* EVENTO 2 */}
+        <div className={`flex-1 flex justify-center items-center md:ml-10 ml-0 md:mt-0 mt-10 relative flex-col`}>
+          <div className={`flex flex-row p-6 rounded-[20px] mb-6 feature-card`}>
+            <div className={`w-[64px] h-[64px] rounded-full flex justify-center items-center bg-dimBlue`}>
+              <MdEvent className=" w-[50%] h-[50%] object-contain" color="orange" />
+            </div>
+            <div className="flex-1 flex flex-col ml-3">
+              <h4 className=" font-semibold text-white text-[18px] leading-[23.4px] mb-1">
+                Evento: "Noche de Risas para Hombres Empoderados"
+              </h4>
               <p className="text-gray-500 dark:text-gray-400">
                 5 de abril, 2024
               </p>
-              <p className="text-gray-500 dark:text-gray-400">
+              <p className="text-gray-500 dark:text-gray-400 font-normal text-dimWhite text-[16px] leading-[24px]">
                 ¿Necesitas un respiro divertido? Únete a nuestra "Noche de Risas
                 para Hombres Empoderados". Comediantes expertos te guiarán a
                 través de situaciones cotidianas con las que muchos hombres se
@@ -137,14 +171,23 @@ const IndexPage = () => {
                 vida en pareja. ¡Prepárate para liberar esas risas reprimidas!
               </p>
             </div>
-            <div className="flex flex-col gap-1">
-              <h3 className="text-2xl text-gray-200 font-semibold tracking-tighter">
-                • Taller: "Hombres al Mando de la Barbacoa"
-              </h3>
+          </div>
+        </div>
+
+        {/* EVENTO 3 */}
+        <div className={`flex-1 flex justify-center items-center md:ml-10 ml-0 md:mt-0 mt-10 relative flex-col`}>
+          <div className={`flex flex-row p-6 rounded-[20px] mb-6 feature-card`}>
+            <div className={`w-[64px] h-[64px] rounded-full flex justify-center items-center bg-dimBlue`}>
+              <MdEvent className=" w-[50%] h-[50%] object-contain" color="orange" />
+            </div>
+            <div className="flex-1 flex flex-col ml-3">
+              <h4 className=" font-semibold text-white text-[18px] leading-[23.4px] mb-1">
+                Taller: "Hombres al Mando de la Barbacoa"
+              </h4>
               <p className="text-gray-500 dark:text-gray-400">
                 22 de abril, 2024
               </p>
-              <p className="text-gray-500 dark:text-gray-400">
+              <p className="text-gray-500 dark:text-gray-400 font-normal text-dimWhite text-[16px] leading-[24px]">
                 ¿Sientes que has perdido el control de las parrillas?
                 ¡Recupéralo en nuestro taller exclusivo! Descubre secretos para
                 preparar las mejores carnes a la parrilla y aprende a manejar
@@ -157,7 +200,7 @@ const IndexPage = () => {
       </div>
 
       {/* 4. Connect with Us */}
-      <div className="w-full py-12 lg:py-16">
+      <div className="p-10 w-full overflow-hidden justify-center items-start">
         <div className="container grid items-center gap-4 px-4 md:px-6">
           <div className="space-y-2 text-center lg:space-y-4 lg:text-left">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">

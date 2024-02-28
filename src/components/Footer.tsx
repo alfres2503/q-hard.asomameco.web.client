@@ -7,23 +7,23 @@ const Footer = () => {
   return (
     <footer className="border-t">
       <div className="container grid items-center justify-center gap-4 min-h-[200px] px-4 py-4 text-center md:gap-6 md:px-6 md:grid-cols-2 lg:min-h-[100px]">
-        <p className="text-sm text-gray-400">
+        <p className="text-sm text-gray-600">
           © {currentYear} Asomameco. Todos los derechos reservados.
         </p>
         <nav className="flex items-center justify-center space-x-4 text-sm">
-          <Link className="text-gray-400" href="/">
+          <Link className="text-gray-600" href="/">
             Inicio
           </Link>
-          <Link className="text-gray-400" href="/about">
+          <Link className="text-gray-600" href="/about">
             Acerca de
           </Link>
-          <Link className="text-gray-400" href="/events">
+          <Link className="text-gray-600" href="/events">
             Eventos
           </Link>
-          <Link className="text-gray-400" href="/contact">
+          <Link className="text-gray-600" href="/contact">
             Contacto
           </Link>
-          <Link className="text-gray-400" href="/login">
+          <Link className="text-gray-600" href="/login">
             Ingresar
           </Link>
         </nav>

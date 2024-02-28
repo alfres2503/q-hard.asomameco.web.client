@@ -8,6 +8,7 @@ import { FaFilePen } from "react-icons/fa6";
 import { FaInfoCircle } from "react-icons/fa";
 import { MdPersonSearch } from "react-icons/md";
 
+
 const Sidebar = () => {
   const { currentMember } = useMemberProvider() as any;
   const [toggle, setToggle] = useState(false);
