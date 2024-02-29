@@ -18,12 +18,17 @@ const IndexPage = () => {
 
   return (
     <>
-      
+
       {/* 1. Hero (banner & support) */}
       <div className="p-10 w-full overflow-hidden justify-center items-start bg-gradient-to-l  from-asomamecoDarkBlue-600 to-AsomamecoBlue-600">
         <section id="Home" className="  flex md:flex-row flex-col sm:py-16 py-6">
+          {/* Hero section */}
+          <div className={`flex-1 flex justify-center items-center md:my-0 my-10 relative`}>
+            <img src="Logo.svg" alt="billing" className="w-[100%] h-[100%] relative z-[5]" />
+          </div>
+
           {/* No estas solo section */}
-          <div className="flex-1 flex justify-center items-start flex-col xl:px-0 sm:px-16 px-6">
+          <div className="flex-1 flex justify-center items-start flex-col xl:px-0 sm:px-16 px-6 sm:m-0 md:ml-80 ml-0">
             <div className="flex flex-row justify-between items-center w-full">
               <h1 className=" flex-1 ss:text-[72px] text-[52px] ss:leading-[100.8px] leading-[75px] font-semibold text-gray-200">
                 No estás solo
@@ -42,40 +47,37 @@ const IndexPage = () => {
             </div>
           </div>
 
-          {/* Hero section */}
-          <div className={`flex-1 flex justify-center items-center md:my-0 my-10 relative`}>
-            <img src="Logo.svg" alt="billing" className="w-[100%] h-[100%] relative z-[5]" />
-          </div>
+
         </section>
       </div>
 
       {/* 2. Real Stories */}
-      <div className="p-10 w-full overflow-hidden justify-center items-start">
-        <section id="clients" className={`sm:py-16 py-6 flex justify-center items-center flex-col relative `}>
-          <div className="absolute z-[0] w-[60%] h-[60%] -right-[50%] rounded-full blue__gradient bottom-40" />
-
-          <div className="w-full flex justify-between items-center md:flex-row flex-col sm:mb-16 mb-6 relative z-[1]">
-            <h2 className=" text-3xl tracking-tighter sm:text-4xl md:text-5xl font-semibold xs:text-[48px] text-[40px] xs:leading-[76.8px] leading-[66.8px] w-full">
-              Casos Reales
-            </h2>
-            <div className="w-full md:mt-0 mt-6">
-              <p className={`font-normal text-dimWhite text-[18px] leading-[30.8px] text-left max-w-[450px]`}>
-                Escucha a hombres que han encontrado salvación.
-              </p>
+      <div className="p-10 w-full overflow-hidden justify-center items-start ">
+        <section id="Home" className="  flex md:flex-row flex-col sm:py-16 py-6">
+          {/* Casos reales section */}
+          <div className="flex-1 flex justify-center items-start flex-col xl:px-0 sm:px-16 px-6">
+            <div className="flex flex-row justify-between items-center w-full">
+              <h1 className=" flex-1 ss:text-[72px] text-[52px] ss:leading-[100.8px] leading-[75px] font-semibold ">
+                Casos Reales
+              </h1>
             </div>
+            <p className="max-w-2xl text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed ">
+              Escucha a hombres que han encontrado salvación.
+            </p>
           </div>
-          
-          <div className="flex flex-wrap sm:justify-start justify-center w-full feedback-container relative z-[1]">
+
+          {/* Casos section */}
+          <div className={`flex flex-col md:flex-row justify-center items-center md:my-0 my-10 relative`}>
+
             {/* CASO 1 */}
-            <div className="flex justify-between flex-col px-10 py-12 rounded-[20px] hover:bg-gradient-to-b  from-asomamecoLightOrange-800 to-transparent delay-200 max-w-[650px] md:mr-10 sm:mr-5 mr-0 my-5 feedback-card">
+            <div className="flex justify-between flex-col px-10 py-12 rounded-[20px] max-w-[650px] md:mr-10 sm:mr-5 mr-0 my-5 feedback-card">
               <RiDoubleQuotesL className="w-[60px] h-[60px] object-contain" />
-              <p className=" font-normal text-[18px] leading-[32.4px]">
+              <p className="font-normal text-[18px] leading-[32.4px]  my-10">
                 "Antes, mi esposa tomaba todas las decisiones importantes.
                 Incluso elegía mi sabor de helado. Gracias a la asociación,
                 ahora puedo decir con orgullo que he elegido fresa por primera
                 vez en años. ¡Recuperé el control, aunque sea sobre mi helado!"
               </p>
-
               <div className="flex flex-row">
                 <div className="flex flex-col ml-4">
                   <h4 className=" font-semibold text-[20px] leading-[32px] ">
@@ -89,7 +91,7 @@ const IndexPage = () => {
             </div>
 
             {/* CASO 2 */}
-            <div className="flex justify-between flex-col px-10 py-12 rounded-[20px] hover:bg-gradient-to-b  from-asomamecoLightOrange-800 to-transparent delay-200 max-w-[650px] md:mr-10 sm:mr-5 mr-0 my-5 feedback-card">
+            <div className="flex justify-between flex-col px-10 py-12 rounded-[20px] bg-blue max-w-[650px] md:mr-10 sm:mr-5 mr-0 my-5 feedback-card">
               <RiDoubleQuotesL className="w-[60px] h-[60px] object-contain" />
               <p className="font-normal text-[18px] leading-[32.4px]  my-10">
                 "Gracias a la asociación, aprendí a establecer límites de manera
@@ -97,7 +99,6 @@ const IndexPage = () => {
                 hasta mis amigos. Ahora, decido mi propio estilo y hasta tengo
                 un amigo al que ella no eligió por mí. ¡Es un gran paso!"
               </p>
-
               <div className="flex flex-row">
                 <div className="flex flex-col ml-4">
                   <h4 className=" font-semibold text-[20px] leading-[32px] ">
@@ -109,9 +110,7 @@ const IndexPage = () => {
                 </div>
               </div>
             </div>
-
           </div>
-
         </section>
       </div>
 
@@ -125,10 +124,11 @@ const IndexPage = () => {
             Únete a nuestros talleres y discusiones.
           </p>
         </div>
+
         {/* EVENTO 1 */}
-        <div className={`flex-1 flex justify-center items-center md:ml-10 ml-0 md:mt-0 mt-10 relative flex-col`}>
+        <div className={`flex-1 flex justify-center items-center md:ml-1 ml-0 md:mt-0 mt-10 relative flex-col`}>
           <div className={`flex flex-row p-6 rounded-[20px] mb-6 feature-card`}>
-            <div className={`w-[64px] h-[64px] rounded-full flex justify-center items-center bg-dimBlue`}>
+            <div className={`w-[64px] h-[64px] rounded-full flex justify-center items-center`}>
               <MdEvent className=" w-[50%] h-[50%] object-contain" color="orange" />
             </div>
             <div className="flex-1 flex flex-col ml-3">
@@ -151,7 +151,7 @@ const IndexPage = () => {
         </div>
 
         {/* EVENTO 2 */}
-        <div className={`flex-1 flex justify-center items-center md:ml-10 ml-0 md:mt-0 mt-10 relative flex-col`}>
+        <div className={`flex-1 flex justify-center items-center md:ml-1 ml-0 md:mt-0 mt-10 relative flex-col`}>
           <div className={`flex flex-row p-6 rounded-[20px] mb-6 feature-card`}>
             <div className={`w-[64px] h-[64px] rounded-full flex justify-center items-center bg-dimBlue`}>
               <MdEvent className=" w-[50%] h-[50%] object-contain" color="orange" />
@@ -175,7 +175,7 @@ const IndexPage = () => {
         </div>
 
         {/* EVENTO 3 */}
-        <div className={`flex-1 flex justify-center items-center md:ml-10 ml-0 md:mt-0 mt-10 relative flex-col`}>
+        <div className={`flex-1 flex justify-center items-center md:ml-1 ml-0 md:mt-0 mt-10 relative flex-col`}>
           <div className={`flex flex-row p-6 rounded-[20px] mb-6 feature-card`}>
             <div className={`w-[64px] h-[64px] rounded-full flex justify-center items-center bg-dimBlue`}>
               <MdEvent className=" w-[50%] h-[50%] object-contain" color="orange" />
