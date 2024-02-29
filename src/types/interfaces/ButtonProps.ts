@@ -6,4 +6,5 @@ export interface ButtonProps {
   color?: "orange" | "blue";
   className?: string;
   isDisabled?: boolean;
+  type?: "button" | "submit" | "reset";
 }

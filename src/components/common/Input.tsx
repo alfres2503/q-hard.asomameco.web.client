@@ -11,6 +11,7 @@ const Input: FC<InputProps> = ({
   color = "blue",
   className = "",
   isDisabled = false,
+  value = "",
 }) => {
   const buttonColor =
     color === "orange"
@@ -34,6 +35,7 @@ const Input: FC<InputProps> = ({
         id={id}
         placeholder={placeholder}
         disabled={isDisabled}
+        value={value}
       ></input>
     </>
   );

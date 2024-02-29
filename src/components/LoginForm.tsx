@@ -45,6 +45,7 @@ const LoginForm = () => {
   return (
     <>
       <div className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto my-2 ">
+        
         <div className="pb-1 pt-1 flex items-center rounded-lg bg-asomamecoDarkBlue">
           <FaEnvelope className="text-gray-100 m-4 block"></FaEnvelope>
           <Input
