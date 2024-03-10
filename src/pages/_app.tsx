@@ -1,6 +1,6 @@
 import Head from "next/head";
 import "@/styles/globals.css";
-import { MemberProvider } from "@/context/MemberContext";
+import { MemberProvider } from "@/context/provider/MemberProvider";
 
 export default function App({
   Component,

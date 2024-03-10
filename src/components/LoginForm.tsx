@@ -4,11 +4,14 @@ import { FaEnvelope } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
 import Button from "./common/Button";
 import Input from "./common/Input";
+import { useMember } from "@/hooks/useAuth";
 
 const authService = new AuthService();
 
 const LoginForm = () => {
   let buttonIsEnabled: boolean = true;
+
+  const { loginMember } = useMember();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -55,7 +58,8 @@ const LoginForm = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Correo Electrónico"
             className="block w-full p-3 pl-1 text-lg rounded-lg bg-[#052850] focus:outline-none placeholder-gray-100"
-          ></Input>
+          >     
+          </Input>
         </div>
         <div className="pb-2 pt-4 "></div>
         <div className="pb-1 pt-1 flex items-center bg-asomamecoDarkBlue rounded-lg ">

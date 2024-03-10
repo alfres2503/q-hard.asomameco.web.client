@@ -5,7 +5,7 @@ import Button from "./common/Button";
 import { LuLogOut } from "react-icons/lu";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { usePathname } from "next/navigation";
-import { useMemberProvider } from "@/context/MemberContext";
+import { useMemberProvider } from "@/context/provider/MemberProvider";
 import { CgClose } from "react-icons/cg";
 import { FaHamburger } from "react-icons/fa";
 import { GiHamburger, GiHamburgerMenu } from "react-icons/gi";
