@@ -1,54 +1,38 @@
-import { AuthService } from "@/utils/AuthService";
+import { AuthService } from "@/services/AuthService";
 import React, { useState } from "react";
 import { FaEnvelope } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
 import Button from "./common/Button";
 import Input from "./common/Input";
-import { useMember } from "@/hooks/useAuth";
+import { useRouter } from "next/router";
 
 const authService = new AuthService();
 
 const LoginForm = () => {
-  let buttonIsEnabled: boolean = true;
+  const router = useRouter();
 
-  const { loginMember } = useMember();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [errorText, setErrorText] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorText, setErrorText] = useState("");
+  const HandleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setIsLoading(true);
+    try {
+      const response = await authService.loginMember({ email, password });
 
-  const logIn = async () => {
-    const member = {
-      email: email,
-      password: password,
-    };
-
-    const memberResponse = await authService.loginMember(member);
-
-    buttonIsEnabled = true;
-
-    if (memberResponse) {
-      buttonIsEnabled = false;
-      // Router.push("/");
-      window.location.href = "/";
-    } else {
-      buttonIsEnabled = true;
-      setErrorText("Credenciales incorrectas.")
+      if (response) router.push("/app");
+    } catch (error) {
+      setErrorText("Hubo un error al iniciar sesión.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
   return (
-    <>
+    <form onSubmit={HandleSubmit}>
       <div className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto my-2 ">
-        
         <div className="pb-1 pt-1 flex items-center rounded-lg bg-asomamecoDarkBlue">
           <FaEnvelope className="text-gray-100 m-4 block"></FaEnvelope>
           <Input
@@ -58,8 +42,7 @@ const LoginForm = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Correo Electrónico"
             className="block w-full p-3 pl-1 text-lg rounded-lg bg-[#052850] focus:outline-none placeholder-gray-100"
-          >     
-          </Input>
+          ></Input>
         </div>
         <div className="pb-2 pt-4 "></div>
         <div className="pb-1 pt-1 flex items-center bg-asomamecoDarkBlue rounded-lg ">
@@ -90,15 +73,16 @@ const LoginForm = () => {
         <h3 className="text-red-600">{errorText}</h3>
         <div className="pb-2 pt-4">
           <Button
-            isDisabled={!buttonIsEnabled}
-            onClick={logIn}
+            isDisabled={isLoading}
+            onClick={() => {}}
             className="w-full p-4 text-lg"
+            type="submit"
           >
-            Iniciar sesión
+            {isLoading ? "Cargando..." : "Iniciar Sesión"}
           </Button>
         </div>
       </div>
-    </>
+    </form>
   );
 };
 

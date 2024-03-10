@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { environment } from "./environment";
+import { environment } from "../utils/environment";
 import { ApiError } from "next/dist/server/api-utils";
 
 export class GenericService {
@@ -28,10 +28,13 @@ export class GenericService {
     endpoint: string,
     objUpdate: any | any
   ): Promise<any | any[]> {
-    return await axios.put(this.APIUrl + endpoint + `/${objUpdate.id}`, objUpdate);
+    return await axios.put(
+      this.APIUrl + endpoint + `/${objUpdate.id}`,
+      objUpdate
+    );
   }
 
-  public async delete(endpoint:string, id: number): Promise<AxiosResponse> {
+  public async delete(endpoint: string, id: number): Promise<AxiosResponse> {
     return await axios.delete(this.APIUrl + endpoint + `/${id}`);
   }
 }

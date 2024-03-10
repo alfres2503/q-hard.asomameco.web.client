@@ -1,14 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { Fragment } from "react";
-import Button from "./common/Button";
-import { LuLogOut } from "react-icons/lu";
+import React, { Fragment, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { usePathname } from "next/navigation";
-import { useMemberProvider } from "@/context/provider/MemberProvider";
 import { CgClose } from "react-icons/cg";
-import { FaHamburger } from "react-icons/fa";
-import { GiHamburger, GiHamburgerMenu } from "react-icons/gi";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { useMember } from "@/hooks/useAuth";
 
 const navigation = [
   { name: "Panel", href: "/app" },
@@ -23,8 +20,7 @@ function classNames(...classes: string[]) {
 
 const NavBar = () => {
   const pathname = usePathname();
-
-  const { currentMember } = useMemberProvider() as any;
+  const { currentMember } = useMember();
 
   return (
     <Disclosure as="nav" className="bg-white shadow-sm">

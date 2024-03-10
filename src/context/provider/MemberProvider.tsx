@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AuthService } from "@/utils/AuthService";
+import { AuthService } from "@/services/AuthService";
 import { MemberContext } from "../MemberContext";
 
 export const MemberProvider = ({ children }: { children: React.ReactNode }) => {

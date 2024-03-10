@@ -1,4 +1,4 @@
-import { GenericService } from "@/utils/GenericService";
+import { GenericService } from "@/services/GenericService";
 import React, { useEffect, useState } from "react";
 import Layout from "../layout";
 
