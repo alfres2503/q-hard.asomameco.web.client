@@ -32,7 +32,7 @@ const Input: FC<InputProps> = ({
         id={id}
         placeholder={placeholder}
         disabled={isDisabled}
-        value={value}
+        // value={value}
       ></input>
     </>
   );
