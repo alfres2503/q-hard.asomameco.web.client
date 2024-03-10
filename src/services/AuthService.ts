@@ -14,13 +14,17 @@ export class AuthService {
           "currentMember",
           JSON.stringify(response.data.member)
         );
-
-        return response.data.member;
+        return response.data;
       }
-
-      return null;
-    } catch {
-      console.error("Error");
+    } catch (error: any) {
+      if (error.response && error.response.status === 401)
+        return error.response.data;
+      else
+        return {
+          success: false,
+          message:
+            "Ocurrió un error inesperado. Por favor, inténtelo de nuevo.",
+        };
     }
   }
 }
