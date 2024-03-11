@@ -3,8 +3,7 @@ import React, { FC, useState } from "react";
 import { FaEnvelope } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
 import Button from "./common/Button";
-import { Dialog, DialogPanel } from "@tremor/react";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
 import { useNotification } from "@/hooks/useNotification";
@@ -21,24 +20,24 @@ const validationSchema = Yup.object().shape({
 const LoginForm: FC = () => {
   const router = useRouter();
 
-  const { Notification, setMessage, setShowNotification } = useNotification();
+  const { Notification } = useNotification();
   const [response, setResponse] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleLogin = async (values: any) => {
     setIsLoading(true);
+
     try {
       const apiResponse = await authService.loginMember(values);
       setResponse(apiResponse);
 
-      if (apiResponse.success === true) {
-        //setIsOpen(false);
-        setShowNotification(false);
-        router.push("/app");
-      } else {
+      if (!apiResponse.success) {
         Notification(apiResponse.message, "ERROR");
         setIsLoading(false);
+        return;
       }
+
+      router.push("/app");
     } catch (error) {
       Notification(response.message, "ERROR");
       setIsLoading(false);
