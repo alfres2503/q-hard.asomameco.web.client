@@ -7,6 +7,7 @@ import { Dialog, DialogPanel } from "@tremor/react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
+import { useNotification } from "@/hooks/useNotification";
 
 const authService = new AuthService();
 
@@ -20,8 +21,7 @@ const validationSchema = Yup.object().shape({
 const LoginForm: FC = () => {
   const router = useRouter();
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
+  const { Notification, setMessage, setShowNotification } = useNotification();
   const [response, setResponse] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -29,18 +29,18 @@ const LoginForm: FC = () => {
     setIsLoading(true);
     try {
       const apiResponse = await authService.loginMember(values);
-      console.log(apiResponse);
+      setResponse(apiResponse);
 
       if (apiResponse.success === true) {
-        setIsOpen(false);
+        //setIsOpen(false);
+        setShowNotification(false);
         router.push("/app");
       } else {
-        setResponse(apiResponse);
-        setIsOpen(true);
+        Notification(apiResponse.message, "ERROR");
         setIsLoading(false);
       }
     } catch (error) {
-      setIsOpen(true);
+      Notification(response.message, "ERROR");
       setIsLoading(false);
     }
   };
@@ -115,23 +115,6 @@ const LoginForm: FC = () => {
           </Form>
         )}
       </Formik>
-      <Dialog open={isOpen} onClose={(val) => setIsOpen(val)} static={true}>
-        <DialogPanel className="">
-          <h3 className="text-lg font-semibold text-tremor-content-strong dark:text-dark-tremor-content-strong">
-            Hubo un error
-          </h3>
-          <p className="mt-2 leading-6 text-tremor-default text-tremor-content dark:text-dark-tremor-content">
-            {response?.message}
-          </p>
-          <Button
-            color="blue"
-            className="mt-8 w-full p-3 text-white"
-            onClick={() => setIsOpen(false)}
-          >
-            Ok
-          </Button>
-        </DialogPanel>
-      </Dialog>
     </>
   );
 };
