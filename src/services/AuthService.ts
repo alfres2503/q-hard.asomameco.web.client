@@ -2,9 +2,9 @@ import axios from "axios";
 import { environment } from "../utils/environment";
 
 export class AuthService {
-  private APIUrl: string = environment.apiURL;
+  private static APIUrl: string = environment.apiURL;
 
-  public async loginMember(member: any) {
+  public static async loginMember(member: any) {
     try {
       const response = await axios.post(this.APIUrl + "auth", member);
 
@@ -25,6 +25,18 @@ export class AuthService {
           message:
             "Ocurrió un error inesperado. Por favor, inténtelo de nuevo.",
         };
+    }
+  }
+
+  public static async logout() {
+    try {
+      localStorage.removeItem("token");
+      localStorage.removeItem("currentMember");
+    } catch (error: any) {
+      return {
+        success: false,
+        message: "Ocurrió un error inesperado. Por favor, inténtelo de nuevo.",
+      };
     }
   }
 }

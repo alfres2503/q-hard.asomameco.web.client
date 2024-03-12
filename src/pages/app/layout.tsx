@@ -10,7 +10,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       </Suspense>
 
       <main className="flex-grow">{children}</main>
-      <Footer />
+      <Footer showLoginLink={false} />
     </div>
   );
 };

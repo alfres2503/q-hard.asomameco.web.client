@@ -8,8 +8,6 @@ import * as Yup from "yup";
 import { useRouter } from "next/router";
 import { useNotification } from "@/hooks/useNotification";
 
-const authService = new AuthService();
-
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Ingrese un correo válido")
@@ -28,7 +26,7 @@ const LoginForm: FC = () => {
     setIsLoading(true);
 
     try {
-      const apiResponse = await authService.loginMember(values);
+      const apiResponse = await AuthService.loginMember(values);
       setResponse(apiResponse);
 
       if (!apiResponse.success) {

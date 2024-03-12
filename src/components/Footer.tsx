@@ -1,8 +1,11 @@
+import { useMember } from "@/hooks/useAuth";
+import { FooterProps } from "@/types/interfaces/FooterProps";
 import Link from "next/link";
-import React from "react";
+import React, { FC } from "react";
 
-const Footer = () => {
+const Footer: FC<FooterProps> = ({ showLoginLink = true }) => {
   const currentYear = new Date().getFullYear();
+  const { currentMember } = useMember();
 
   return (
     <footer className="border-t">
@@ -23,9 +26,14 @@ const Footer = () => {
           <Link className="text-gray-600" href="/contact">
             Contacto
           </Link>
-          <Link className="text-gray-600" href="/login">
+          {/* <Link className="text-gray-600" href="/login">
             Ingresar
-          </Link>
+          </Link> */}
+          {showLoginLink && (
+            <Link className="text-gray-600" href="/login">
+              Ingresar
+            </Link>
+          )}
         </nav>
       </div>
     </footer>
