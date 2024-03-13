@@ -24,7 +24,8 @@ const MembersPage = () => {
 
   const [members, setMembers] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(5);
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
     setPageNumber(
@@ -41,7 +42,8 @@ const MembersPage = () => {
         `members?pageNumber=${pageNumber}&pageSize=${pageSize}`
       );
 
-      setMembers(response.data);
+      setMembers(response.data.list);
+      setTotalPages(response.data.totalPages);
     };
 
     fetchData();
@@ -132,21 +134,23 @@ const MembersPage = () => {
                 )}
 
                 <span className="text-lg font-semibold">
-                  Página {pageNumber}
+                  Página {pageNumber} de {totalPages}
                 </span>
 
-                <button
-                  className="p-3 py-2 hover:bg-gray-300 rounded-lg transition-colors"
-                  onClick={() => {
-                    router.push(
-                      `/app/members?pageNumber=${
-                        pageNumber + 1
-                      }&pageSize=${pageSize}`
-                    );
-                  }}
-                >
-                  Siguiente
-                </button>
+                {pageNumber < totalPages && (
+                  <button
+                    className="p-3 py-2 hover:bg-gray-300 rounded-lg transition-colors"
+                    onClick={() => {
+                      router.push(
+                        `/app/members?pageNumber=${
+                          pageNumber + 1
+                        }&pageSize=${pageSize}`
+                      );
+                    }}
+                  >
+                    Siguiente
+                  </button>
+                )}
               </div>
             </article>
           </div>
