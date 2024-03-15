@@ -11,6 +11,7 @@ const Input: FC<InputProps> = ({
   color = "blue",
   className = "",
   isDisabled = false,
+  value = "",
 }) => {
   const buttonColor =
     color === "orange"
@@ -19,12 +20,9 @@ const Input: FC<InputProps> = ({
       ? "bg-asomamecoDarkBlue text-white"
       : "bg-white text-gray-800";
 
-  const classes = `rounded-lg focus:outline-none placeholder-gray-100 ${buttonColor} ${className}`;
+  const classes = `rounded-lg focus:outline-none border-0 placeholder-gray-100 ${buttonColor} ${className}`;
 
   return (
-    // <button className={classes} onChange={onChange} disabled={isDisabled}>
-    //   {children}
-    // </button>
     <>
       <input
         className={classes}
@@ -34,6 +32,7 @@ const Input: FC<InputProps> = ({
         id={id}
         placeholder={placeholder}
         disabled={isDisabled}
+        // value={value}
       ></input>
     </>
   );

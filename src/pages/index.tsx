@@ -1,5 +1,4 @@
-import { useMemberProvider } from "@/context/MemberContext";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import Button from "@/components/common/Button";
 import { useRouter } from "next/router";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
@@ -8,9 +7,12 @@ import Footer from "@/components/Footer";
 import { RiDoubleQuotesL } from "react-icons/ri";
 import { MdEvent } from "react-icons/md";
 
+
+import { useMember } from "@/hooks/useAuth";
+
 const IndexPage = () => {
   const router = useRouter();
-  const { currentMember } = useMemberProvider() as any;
+  const { currentMember } = useMember();
 
   useEffect(() => {
     console.log(currentMember);
@@ -18,13 +20,21 @@ const IndexPage = () => {
 
   return (
     <>
-
       {/* 1. Hero (banner & support) */}
       <div className="p-10 w-full overflow-hidden justify-center items-start bg-gradient-to-l  from-asomamecoDarkBlue-600 to-AsomamecoBlue-600">
-        <section id="Home" className="  flex md:flex-row flex-col sm:py-16 py-6">
+        <section
+          id="Home"
+          className="  flex md:flex-row flex-col sm:py-16 py-6"
+        >
           {/* Hero section */}
-          <div className={`flex-1 flex justify-center items-center md:my-0 my-10 relative`}>
-            <img src="Logo.svg" alt="billing" className="w-[100%] h-[100%] relative z-[5]" />
+          <div
+            className={`flex-1 flex justify-center items-center md:my-0 my-10 relative`}
+          >
+            <img
+              src="Logo.svg"
+              alt="billing"
+              className="w-[100%] h-[100%] relative z-[5]"
+            />
           </div>
 
           {/* No estas solo section */}
@@ -46,14 +56,15 @@ const IndexPage = () => {
               </Button>
             </div>
           </div>
-
-
         </section>
       </div>
 
       {/* 2. Real Stories */}
       <div className="p-10 w-full overflow-hidden justify-center items-start ">
-        <section id="Home" className="  flex md:flex-row flex-col sm:py-16 py-6">
+        <section
+          id="Home"
+          className="  flex md:flex-row flex-col sm:py-16 py-6"
+        >
           {/* Casos reales section */}
           <div className="flex-1 flex justify-center items-start flex-col xl:px-0 sm:px-16 px-6">
             <div className="flex flex-row justify-between items-center w-full">
@@ -67,8 +78,9 @@ const IndexPage = () => {
           </div>
 
           {/* Casos section */}
-          <div className={`flex flex-col md:flex-row justify-center items-center md:my-0 my-10 relative`}>
-
+          <div
+            className={`flex flex-col md:flex-row justify-center items-center md:my-0 my-10 relative`}
+          >
             {/* CASO 1 */}
             <div className="flex justify-between flex-col px-10 py-12 rounded-[20px] max-w-[650px] md:mr-10 sm:mr-5 mr-0 my-5 feedback-card">
               <RiDoubleQuotesL className="w-[60px] h-[60px] object-contain" />
@@ -126,10 +138,17 @@ const IndexPage = () => {
         </div>
 
         {/* EVENTO 1 */}
-        <div className={`flex-1 flex justify-center items-center md:ml-1 ml-0 md:mt-0 mt-10 relative flex-col`}>
+        <div
+          className={`flex-1 flex justify-center items-center md:ml-1 ml-0 md:mt-0 mt-10 relative flex-col`}
+        >
           <div className={`flex flex-row p-6 rounded-[20px] mb-6 feature-card`}>
-            <div className={`w-[64px] h-[64px] rounded-full flex justify-center items-center`}>
-              <MdEvent className=" w-[50%] h-[50%] object-contain" color="orange" />
+            <div
+              className={`w-[64px] h-[64px] rounded-full flex justify-center items-center`}
+            >
+              <MdEvent
+                className=" w-[50%] h-[50%] object-contain"
+                color="orange"
+              />
             </div>
             <div className="flex-1 flex flex-col ml-3">
               <h4 className=" font-semibold text-white text-[18px] leading-[23.4px] mb-1">
@@ -151,10 +170,17 @@ const IndexPage = () => {
         </div>
 
         {/* EVENTO 2 */}
-        <div className={`flex-1 flex justify-center items-center md:ml-1 ml-0 md:mt-0 mt-10 relative flex-col`}>
+        <div
+          className={`flex-1 flex justify-center items-center md:ml-1 ml-0 md:mt-0 mt-10 relative flex-col`}
+        >
           <div className={`flex flex-row p-6 rounded-[20px] mb-6 feature-card`}>
-            <div className={`w-[64px] h-[64px] rounded-full flex justify-center items-center bg-dimBlue`}>
-              <MdEvent className=" w-[50%] h-[50%] object-contain" color="orange" />
+            <div
+              className={`w-[64px] h-[64px] rounded-full flex justify-center items-center bg-dimBlue`}
+            >
+              <MdEvent
+                className=" w-[50%] h-[50%] object-contain"
+                color="orange"
+              />
             </div>
             <div className="flex-1 flex flex-col ml-3">
               <h4 className=" font-semibold text-white text-[18px] leading-[23.4px] mb-1">
@@ -175,10 +201,17 @@ const IndexPage = () => {
         </div>
 
         {/* EVENTO 3 */}
-        <div className={`flex-1 flex justify-center items-center md:ml-1 ml-0 md:mt-0 mt-10 relative flex-col`}>
+        <div
+          className={`flex-1 flex justify-center items-center md:ml-1 ml-0 md:mt-0 mt-10 relative flex-col`}
+        >
           <div className={`flex flex-row p-6 rounded-[20px] mb-6 feature-card`}>
-            <div className={`w-[64px] h-[64px] rounded-full flex justify-center items-center bg-dimBlue`}>
-              <MdEvent className=" w-[50%] h-[50%] object-contain" color="orange" />
+            <div
+              className={`w-[64px] h-[64px] rounded-full flex justify-center items-center bg-dimBlue`}
+            >
+              <MdEvent
+                className=" w-[50%] h-[50%] object-contain"
+                color="orange"
+              />
             </div>
             <div className="flex-1 flex flex-col ml-3">
               <h4 className=" font-semibold text-white text-[18px] leading-[23.4px] mb-1">

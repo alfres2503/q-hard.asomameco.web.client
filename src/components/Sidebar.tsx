@@ -1,4 +1,4 @@
-import { MemberContext, useMemberProvider } from "@/context/MemberContext";
+import { MemberContext, useMemberProvider } from "@/context/provider/MemberProvider";
 import { Container } from "postcss";
 import React, { useContext, useEffect, useState } from "react";
 

@@ -7,4 +7,5 @@ export interface InputProps {
   color?: "orange" | "blue" | "white";
   className?: string;
   isDisabled?: boolean;
+  value?: string;
 }
