@@ -6,5 +6,7 @@ export interface EventCardProps {
   color?: "orange" | "blue";
   eventName?: string;
   description?: string;
+  dateAndTime?: string;
+  place?: string;
   isDisabled?: boolean;
 }
