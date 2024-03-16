@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import { useRouter } from "next/router";
 import { useNotification } from "@/hooks/useNotification";
 
+
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Ingrese un correo válido")
@@ -21,6 +22,7 @@ const LoginForm: FC = () => {
   const { Notification } = useNotification();
   const [response, setResponse] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
 
   const handleLogin = async (values: any) => {
     setIsLoading(true);

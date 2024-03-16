@@ -10,3 +10,8 @@ export interface Member {
   isActive: boolean;
   role?: Role;
 }
+
+export interface memberContextProps {
+  currentMember: Member | null;
+  loginMember: (member: any) => void;
+}
