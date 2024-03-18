@@ -29,6 +29,7 @@ const MembersPage = () => {
   const [pageSize, setPageSize] = useState(5);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [orderBy, setOrderBy] = useState("");
 
   useEffect(() => {
     setPageNumber(
@@ -46,9 +47,13 @@ const MembersPage = () => {
         : ""
     );
 
+    setOrderBy(
+      searchParams.has("orderBy") ? String(searchParams.get("orderBy")) : ""
+    );
+
     const fetchData = async () => {
       const endpoint = `members?pageNumber=${pageNumber}&pageSize=${pageSize}
-      &searchTerm=${searchTerm}`;
+      &searchTerm=${searchTerm}&orderBy=${orderBy}`;
 
       const response = await GenericService.list(endpoint);
 
@@ -57,14 +62,14 @@ const MembersPage = () => {
     };
 
     fetchData();
-  }, [searchParams, pageNumber, pageSize, pathname]);
+  }, [searchParams, pageNumber, pageSize, pathname, orderBy]);
 
   const handleSearch = () => {
     const query = new URLSearchParams(searchParams);
 
     if (searchTerm) {
       router.push(
-        `${pathname}?searchTerm=${searchTerm}&pageNumber=${1}&pageSize=${pageSize}`
+        `${pathname}?searchTerm=${searchTerm}&pageNumber=${pageNumber}&pageSize=${pageSize}`
       );
       return;
     }
@@ -74,10 +79,21 @@ const MembersPage = () => {
   };
 
   const handlePreviousPage = () => {
+    const query = new URLSearchParams(searchParams);
+
     if (pageNumber > 1) {
       if (searchTerm) {
         router.push(
           `${pathname}?searchTerm=${searchTerm}&pageNumber=${
+            pageNumber - 1
+          }&pageSize=${pageSize}`
+        );
+        return;
+      }
+
+      if (orderBy) {
+        router.push(
+          `${pathname}?orderBy=${orderBy}&pageNumber=${
             pageNumber - 1
           }&pageSize=${pageSize}`
         );
@@ -101,6 +117,15 @@ const MembersPage = () => {
         return;
       }
 
+      if (orderBy) {
+        router.push(
+          `${pathname}?orderBy=${orderBy}&pageNumber=${
+            pageNumber + 1
+          }&pageSize=${pageSize}`
+        );
+        return;
+      }
+
       router.push(
         `${pathname}?pageNumber=${pageNumber + 1}&pageSize=${pageSize}`
       );
@@ -116,6 +141,60 @@ const MembersPage = () => {
     }
 
     router.push(`${pathname}?pageNumber=${1}&pageSize=${value}`);
+  };
+
+  const handleSortByName = () => {
+    if (orderBy === "name") {
+      router.push(
+        `${pathname}?orderBy=name_desc&pageNumber=${pageNumber}&pageSize=${pageSize}`
+      );
+      return;
+    }
+
+    if (orderBy === "name_desc") {
+      router.push(`${pathname}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+      return;
+    }
+
+    router.push(
+      `${pathname}?orderBy=name&pageNumber=${pageNumber}&pageSize=${pageSize}`
+    );
+  };
+
+  const handleSortByEmail = () => {
+    if (orderBy === "email") {
+      router.push(
+        `${pathname}?orderBy=email_desc&pageNumber=${pageNumber}&pageSize=${pageSize}`
+      );
+      return;
+    }
+
+    if (orderBy === "email_desc") {
+      router.push(`${pathname}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+      return;
+    }
+
+    router.push(
+      `${pathname}?orderBy=email&pageNumber=${pageNumber}&pageSize=${pageSize}`
+    );
+  };
+
+  const handleSortByActive = () => {
+    if (orderBy === "active") {
+      router.push(
+        `${pathname}?orderBy=active_desc&pageNumber=${pageNumber}&pageSize=${pageSize}`
+      );
+      return;
+    }
+
+    if (orderBy === "active_desc") {
+      router.push(`${pathname}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+      return;
+    }
+
+    router.push(
+      `${pathname}?orderBy=active&pageNumber=${pageNumber}&pageSize=${pageSize}`
+    );
   };
 
   return (
@@ -156,10 +235,20 @@ const MembersPage = () => {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableHeaderCell>Nombre</TableHeaderCell>
+                    <TableHeaderCell>
+                      <button onClick={handleSortByName}>Nombre</button>
+                    </TableHeaderCell>
+
                     <TableHeaderCell>Apellido</TableHeaderCell>
-                    <TableHeaderCell>Correo</TableHeaderCell>
-                    <TableHeaderCell>Activo</TableHeaderCell>
+
+                    <TableHeaderCell>
+                      <button onClick={handleSortByEmail}>Correo</button>
+                    </TableHeaderCell>
+
+                    <TableHeaderCell>
+                      <button onClick={handleSortByActive}>Activo</button>
+                    </TableHeaderCell>
+
                     <TableHeaderCell>Acciones</TableHeaderCell>
                   </TableRow>
                 </TableHead>
