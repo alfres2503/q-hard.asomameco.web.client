@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-export const useOrderBy = (pageNumber: number, pageSize: number) => {
+export const useOrderBy = (pageNumber: number = 1, pageSize: number = 5) => {
   const [orderBy, setOrderBy] = useState("");
   const router = useRouter();
 
