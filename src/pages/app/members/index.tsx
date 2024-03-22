@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import Layout from "../layout";
 import { Member } from "@/types/models/Member";
 import {
-  Select,
-  SelectItem,
   Switch,
   Table,
   TableBody,
@@ -19,6 +17,8 @@ import { IoIosAddCircle } from "react-icons/io";
 import { useSearch } from "@/hooks/useSearch";
 import { usePagination } from "@/hooks/usePagination";
 import { useOrderBy } from "@/hooks/useOrderBy";
+import SearchBar from "@/components/SearchBar";
+import Paginator from "@/components/PaginationFooter";
 
 const MembersPage = () => {
   const pathname = usePathname();
@@ -94,22 +94,12 @@ const MembersPage = () => {
               </Button>
             </div>
 
-            {/* Search bar */}
-            <div className="flex">
-              <input
-                type="text"
-                placeholder="Buscar miembro"
-                className="w-full p-3 rounded-lg border-2 border-gray-300"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <Button
-                onClick={() => handleSearchWithPage(pageNumber, pageSize)}
-                className="text-white p-2 ml-3"
-              >
-                Buscar
-              </Button>
-            </div>
+            {/* SearchBar */}
+            <SearchBar
+              value={searchTerm}
+              onChange={setSearchTerm}
+              onSearch={() => handleSearchWithPage(pageNumber, pageSize)}
+            />
 
             {/* Table */}
             <div className="w-full">
@@ -155,47 +145,15 @@ const MembersPage = () => {
                 </TableBody>
               </Table>
 
-              <article className="flex flex-col sm:flex-row w-full mt-10 gap-10 text-gray-700">
-                {/* Selector de items por página */}
-                <div className="flex w-full sm:w-[50%] items-center">
-                  <Select
-                    defaultValue="5"
-                    className="w-full"
-                    onValueChange={(value) => ChangePageSize(value)}
-                  >
-                    <SelectItem value="5">5</SelectItem>
-                    <SelectItem value="10">10</SelectItem>
-                    <SelectItem value="20">20</SelectItem>
-                    <SelectItem value="50">50</SelectItem>
-                  </Select>
-                </div>
-
-                {/* Selector de página */}
-                <div className="flex w-full sm:w-[50%] items-center justify-center sm:justify-end gap-10">
-                  {pageNumber > 1 && (
-                    <button
-                      className="p-3 py-2 hover:bg-gray-300 rounded-lg transition-colors"
-                      color="blue"
-                      onClick={() => PreviousPage(orderBy)}
-                    >
-                      Anterior
-                    </button>
-                  )}
-
-                  <span className="text-lg font-semibold">
-                    Página {pageNumber} de {totalPages}
-                  </span>
-
-                  {pageNumber < totalPages && (
-                    <button
-                      className="p-3 py-2 hover:bg-gray-300 rounded-lg transition-colors"
-                      onClick={() => NextPage(totalPages, orderBy)}
-                    >
-                      Siguiente
-                    </button>
-                  )}
-                </div>
-              </article>
+              {/* Pagination */}
+              <Paginator
+                pageNumber={pageNumber}
+                totalPages={totalPages}
+                PreviousPage={PreviousPage}
+                NextPage={NextPage}
+                orderBy={orderBy}
+                ChangePageSize={ChangePageSize}
+              />
             </div>
           </div>
         )}
