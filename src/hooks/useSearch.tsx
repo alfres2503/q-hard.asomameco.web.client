@@ -1,8 +1,11 @@
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-export const useSearch = (searchParams: any) => {
+export const useSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
+
+  const searchParams = useSearchParams();
   const router = useRouter();
 
   const handleSearch = () => {

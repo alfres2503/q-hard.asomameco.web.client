@@ -15,23 +15,32 @@ import {
 } from "@tremor/react";
 import Button from "@/components/common/Button";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
 import { IoIosAddCircle } from "react-icons/io";
 import { useSearch } from "@/hooks/useSearch";
+import { usePagination } from "@/hooks/usePagination";
+import { useOrderBy } from "@/hooks/useOrderBy";
 
 const MembersPage = () => {
-  const searchParams = useSearchParams();
-  const router = useRouter();
   const pathname = usePathname();
-  const { searchTerm, setSearchTerm, handleSearchWithPage } =
-    useSearch(searchParams);
+  const searchParams = useSearchParams();
 
   const [members, setMembers] = useState([]);
-
-  const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
   const [totalPages, setTotalPages] = useState(0);
-  const [orderBy, setOrderBy] = useState("");
+
+  const { searchTerm, setSearchTerm, handleSearchWithPage } = useSearch();
+
+  const {
+    pageNumber,
+    pageSize,
+    setPageNumber,
+    setPageSize,
+    PreviousPage,
+    NextPage,
+    ChangePageSize,
+  } = usePagination(searchTerm);
+
+  const { orderBy, setOrderBy, SortByName, SortByEmail, SortByActive } =
+    useOrderBy(pageNumber, pageSize);
 
   useEffect(() => {
     setPageNumber(
@@ -65,125 +74,6 @@ const MembersPage = () => {
 
     fetchData();
   }, [searchParams, pageNumber, pageSize, pathname, orderBy]);
-
-  const handlePreviousPage = () => {
-    const query = new URLSearchParams(searchParams);
-
-    if (pageNumber > 1) {
-      if (searchTerm) {
-        router.push(
-          `${pathname}?searchTerm=${searchTerm}&pageNumber=${
-            pageNumber - 1
-          }&pageSize=${pageSize}`
-        );
-        return;
-      }
-
-      if (orderBy) {
-        router.push(
-          `${pathname}?orderBy=${orderBy}&pageNumber=${
-            pageNumber - 1
-          }&pageSize=${pageSize}`
-        );
-        return;
-      }
-
-      router.push(
-        `${pathname}?pageNumber=${pageNumber - 1}&pageSize=${pageSize}`
-      );
-    }
-  };
-
-  const handleNextPage = () => {
-    if (pageNumber < totalPages) {
-      if (searchTerm) {
-        router.push(
-          `${pathname}?searchTerm=${searchTerm}&pageNumber=${
-            pageNumber + 1
-          }&pageSize=${pageSize}`
-        );
-        return;
-      }
-
-      if (orderBy) {
-        router.push(
-          `${pathname}?orderBy=${orderBy}&pageNumber=${
-            pageNumber + 1
-          }&pageSize=${pageSize}`
-        );
-        return;
-      }
-
-      router.push(
-        `${pathname}?pageNumber=${pageNumber + 1}&pageSize=${pageSize}`
-      );
-    }
-  };
-
-  const handleChangePageSize = (value: string) => {
-    if (searchTerm) {
-      router.push(
-        `${pathname}?searchTerm=${searchTerm}&pageNumber=${1}&pageSize=${value}`
-      );
-      return;
-    }
-
-    router.push(`${pathname}?pageNumber=${1}&pageSize=${value}`);
-  };
-
-  const handleSortByName = () => {
-    if (orderBy === "name") {
-      router.push(
-        `${pathname}?orderBy=name_desc&pageNumber=${pageNumber}&pageSize=${pageSize}`
-      );
-      return;
-    }
-
-    if (orderBy === "name_desc") {
-      router.push(`${pathname}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
-      return;
-    }
-
-    router.push(
-      `${pathname}?orderBy=name&pageNumber=${pageNumber}&pageSize=${pageSize}`
-    );
-  };
-
-  const handleSortByEmail = () => {
-    if (orderBy === "email") {
-      router.push(
-        `${pathname}?orderBy=email_desc&pageNumber=${pageNumber}&pageSize=${pageSize}`
-      );
-      return;
-    }
-
-    if (orderBy === "email_desc") {
-      router.push(`${pathname}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
-      return;
-    }
-
-    router.push(
-      `${pathname}?orderBy=email&pageNumber=${pageNumber}&pageSize=${pageSize}`
-    );
-  };
-
-  const handleSortByActive = () => {
-    if (orderBy === "active") {
-      router.push(
-        `${pathname}?orderBy=active_desc&pageNumber=${pageNumber}&pageSize=${pageSize}`
-      );
-      return;
-    }
-
-    if (orderBy === "active_desc") {
-      router.push(`${pathname}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
-      return;
-    }
-
-    router.push(
-      `${pathname}?orderBy=active&pageNumber=${pageNumber}&pageSize=${pageSize}`
-    );
-  };
 
   return (
     <Layout>
@@ -227,17 +117,17 @@ const MembersPage = () => {
                 <TableHead>
                   <TableRow>
                     <TableHeaderCell>
-                      <button onClick={handleSortByName}>Nombre</button>
+                      <button onClick={SortByName}>Nombre</button>
                     </TableHeaderCell>
 
                     <TableHeaderCell>Apellido</TableHeaderCell>
 
                     <TableHeaderCell>
-                      <button onClick={handleSortByEmail}>Correo</button>
+                      <button onClick={SortByEmail}>Correo</button>
                     </TableHeaderCell>
 
                     <TableHeaderCell>
-                      <button onClick={handleSortByActive}>Activo</button>
+                      <button onClick={SortByActive}>Activo</button>
                     </TableHeaderCell>
 
                     <TableHeaderCell>Acciones</TableHeaderCell>
@@ -271,7 +161,7 @@ const MembersPage = () => {
                   <Select
                     defaultValue="5"
                     className="w-full"
-                    onValueChange={(value) => handleChangePageSize(value)}
+                    onValueChange={(value) => ChangePageSize(value)}
                   >
                     <SelectItem value="5">5</SelectItem>
                     <SelectItem value="10">10</SelectItem>
@@ -286,7 +176,7 @@ const MembersPage = () => {
                     <button
                       className="p-3 py-2 hover:bg-gray-300 rounded-lg transition-colors"
                       color="blue"
-                      onClick={handlePreviousPage}
+                      onClick={() => PreviousPage(orderBy)}
                     >
                       Anterior
                     </button>
@@ -299,7 +189,7 @@ const MembersPage = () => {
                   {pageNumber < totalPages && (
                     <button
                       className="p-3 py-2 hover:bg-gray-300 rounded-lg transition-colors"
-                      onClick={handleNextPage}
+                      onClick={() => NextPage(totalPages, orderBy)}
                     >
                       Siguiente
                     </button>
