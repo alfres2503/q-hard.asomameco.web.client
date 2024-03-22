@@ -17,18 +17,20 @@ import Button from "@/components/common/Button";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { IoIosAddCircle } from "react-icons/io";
+import { useSearch } from "@/hooks/useSearch";
 
 const MembersPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+  const { searchTerm, setSearchTerm, handleSearchWithPage } =
+    useSearch(searchParams);
 
   const [members, setMembers] = useState([]);
 
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [totalPages, setTotalPages] = useState(0);
-  const [searchTerm, setSearchTerm] = useState("");
   const [orderBy, setOrderBy] = useState("");
 
   useEffect(() => {
@@ -63,20 +65,6 @@ const MembersPage = () => {
 
     fetchData();
   }, [searchParams, pageNumber, pageSize, pathname, orderBy]);
-
-  const handleSearch = () => {
-    const query = new URLSearchParams(searchParams);
-
-    if (searchTerm) {
-      router.push(
-        `${pathname}?searchTerm=${searchTerm}&pageNumber=${pageNumber}&pageSize=${pageSize}`
-      );
-      return;
-    }
-
-    query.delete("searchTerm");
-    router.push(`${pathname}?${query.toString()}`);
-  };
 
   const handlePreviousPage = () => {
     const query = new URLSearchParams(searchParams);
@@ -225,7 +213,10 @@ const MembersPage = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <Button onClick={handleSearch} className="text-white p-2 ml-3">
+              <Button
+                onClick={() => handleSearchWithPage(pageNumber, pageSize)}
+                className="text-white p-2 ml-3"
+              >
                 Buscar
               </Button>
             </div>
