@@ -12,7 +12,6 @@ import Layout from "../../layout";
 import { Select, SelectItem, Switch } from "@tremor/react";
 import { Member } from "@/types/models/Member";
 import { Role } from "@/types/models/Role";
-import Link from "next/link";
 
 const validationSchema = Yup.object().shape({
   id: Yup.number().required("El id es requerido"),
@@ -37,32 +36,37 @@ const EditMember = () => {
   const [roles, setRoles] = useState([]);
 
   useEffect(() => {
-    const getRoles = async () => {
-      const response = await GenericService.list("roles");
+    try {
+      const getRoles = async () => {
+        const response = await GenericService.list("roles");
 
-      if (response.status !== 200) {
-        Notification(response.data.message);
-        return;
-      }
+        if (response.status !== 200) {
+          Notification(response.data.message);
+          return;
+        }
 
-      setRoles(response.data.list);
-    };
+        setRoles(response.data.list);
+      };
 
-    const fetchMember = async () => {
-      const response = await GenericService.getBy("members", router.query.id);
+      const fetchMember = async () => {
+        const response = await GenericService.getBy("members", router.query.id);
 
-      if (response.status !== 200) {
-        Notification(response.message);
-        return;
-      }
+        if (response.status !== 200) {
+          Notification(response.message);
+          return;
+        }
 
-      console.log(response.data);
+        console.log(response.data);
 
-      setMember(response.data);
-    };
+        setMember(response.data);
+      };
 
-    getRoles();
-    fetchMember();
+      getRoles();
+      fetchMember();
+    } catch (error: any) {
+      setIsLoading(false);
+      Notification(`Acerca del error: ${error.message}`);
+    }
   }, []);
 
   const handleSubmit = async (values: any) => {

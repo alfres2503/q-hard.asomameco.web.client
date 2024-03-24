@@ -21,6 +21,7 @@ import SearchBar from "@/components/SearchBar";
 import Paginator from "@/components/PaginationFooter";
 import { useNotification } from "@/hooks/useNotification";
 import { useRouter } from "next/router";
+import { useMember } from "@/hooks/useAuth";
 
 const MembersPage = () => {
   const router = useRouter();
@@ -30,6 +31,7 @@ const MembersPage = () => {
   const [members, setMembers] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const { currentMember } = useMember();
 
   // Hooks para la busqueda, paginacion y ordenamiento, son reutilizables para otras paginas
   const { searchTerm, setSearchTerm, handleSearchWithPage } = useSearch();
@@ -155,14 +157,16 @@ const MembersPage = () => {
                         <Switch checked={member.isActive} onChange={() => {}} />
                       </TableCell>
                       <TableCell className="flex gap-3">
-                        <Button
-                          onClick={() => {
-                            router.push(`/app/members/edit/${member.id}`);
-                          }}
-                          className="text-xs text-white p-2"
-                        >
-                          Editar
-                        </Button>
+                        {currentMember?.idRole === 1 && (
+                          <Button
+                            onClick={() => {
+                              router.push(`/app/members/edit/${member.id}`);
+                            }}
+                            className="text-xs text-white p-2"
+                          >
+                            Editar
+                          </Button>
+                        )}
                         <Button
                           color="blue"
                           onClick={() => {
