@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 
+// nota: Este hook por ahora solo contempla el ordenamiento por nombre, email y active
+// se puede extender para ordenar por otros campos de otras entidades
 export const useOrderBy = (pageNumber: number = 1, pageSize: number = 5) => {
   const [orderBy, setOrderBy] = useState("");
   const router = useRouter();

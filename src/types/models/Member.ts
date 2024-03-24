@@ -3,6 +3,7 @@ import { Role } from "./Role";
 export interface Member {
   id: number;
   idRole: number;
+  idCard: string;
   firstName: string;
   lastName: string;
   email: string;
