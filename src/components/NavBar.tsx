@@ -15,6 +15,7 @@ const navigation = [
   { name: "Miembros", href: "/app/members" },
   { name: "Eventos", href: "/app/events" },
   { name: "Asociados", href: "/app/associates" },
+  { name: "Catering Service", href: "/app/cateringservices" },
 ];
 
 function classNames(...classes: string[]) {
@@ -84,6 +85,7 @@ const NavBar = () => {
                       <div className="h-8 w-8 rounded-full bg-gradient-to-l  from-asomamecoPrimary-600 to-asomamecoPrimary-900" />
                     </Menu.Button>
                   </div>
+
                   <Transition
                     as={Fragment}
                     enter="transition ease-out duration-200"
@@ -162,6 +164,7 @@ const NavBar = () => {
                 </Disclosure.Button>
               ))}
             </div>
+
             <div className="border-t border-gray-200 pt-4 pb-3">
               {currentMember ? (
                 <>
