@@ -152,8 +152,6 @@ const AssociatesPage = () => {
       return;
     }
 
-    const newAssociateList: any[] = [];
-
     selectedFileData.forEach(data => {
       if (!data) {
         return;
@@ -174,8 +172,6 @@ const AssociatesPage = () => {
       .catch(function (error) {
         console.log(error);
       });
-
-      newAssociateList.push(associateTemp);
     });
   };
 
