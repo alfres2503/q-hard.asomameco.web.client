@@ -35,6 +35,7 @@ const AssociatesPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { currentMember } = useMember();
 
+  const [selectedFileData, setSelectedFileData] = useState<(Record<string, string> | null)[]>([]);
 
   // Hooks para la busqueda, paginacion y ordenamiento, son reutilizables para otras paginas
   const { searchTerm, setSearchTerm, handleSearchWithPage } = useSearch();
@@ -94,6 +95,90 @@ const AssociatesPage = () => {
     setIsLoading(false);
   }, [searchParams, pageNumber, pageSize, pathname, orderBy]);
 
+  // Proceso de datos para leer excel
+  const readExcel = async (file: File) => {
+    try {
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(file);
+
+      reader.onload = (e) => {
+        if (!e.target) {
+          return;
+        }
+        const bufferArray = e.target.result;
+        const wb = XLSX.read(bufferArray, { type: 'buffer' });
+
+        // Suponemos que la primera hoja contiene los datos
+        const wsname = wb.SheetNames[0];
+        const ws = wb.Sheets[wsname];
+
+        // Define los títulos específicos que deseas leer
+        const desiredColumns = ['Nombre', 'Número Cédula', 'Estatus 1', 'Correo', 'Telefono'];
+
+        // Convierte la hoja en un array de objetos
+        const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+
+        // Encuentra las columnas correspondientes a los títulos deseados
+        const titleRow = data[0] as string[];
+        const columnIndex = desiredColumns.map((title) => titleRow.indexOf(title));
+
+        // Extrae los datos de las filas
+        const excelData = (data as string[][]).slice(1).map((row: string[]) => {
+          const rowData: Record<string, string> = {};
+          let isEmptyRow = true; // Bandera para verificar si la fila está vacía
+
+          columnIndex.forEach((index, i) => {
+            const cellValue = row[index];
+            if (cellValue !== null && cellValue !== '' && cellValue !== undefined) {
+              // Si la celda no está vacía, agrega el valor a rowData
+              rowData[desiredColumns[i]] = cellValue;
+              isEmptyRow = false; // La fila no está vacía
+            }
+          });
+          // Si la fila está vacía, no la incluimos en excelData
+          return isEmptyRow ? null : rowData;
+        }).filter(Boolean);
+
+        setSelectedFileData(excelData);
+      };
+    } catch (error) {
+      console.error('Error al leer el archivo Excel:', error);
+    }
+  };
+
+  const saveAssociates = async () => {
+    if (selectedFileData.length === 0) {
+      Notification('Debe ingresar un archivo de excel válido');
+      return;
+    }
+
+    const newAssociateList: any[] = [];
+
+    selectedFileData.forEach(data => {
+      if (!data) {
+        return;
+      }
+
+      const associateTemp = {
+        idCard: data['Número Cédula'] || '',
+        name: data['Nombre'] || '',
+        email: data['Correo'] || '',
+        phone: data['Telefono'] || '',
+        isActive: data['Estatus 1'] === "Inactivo" ? false : true || true,
+      };
+
+      axios.post('http://localhost:7220/api/associates/excel', associateTemp)
+      .then(function (respuesta) {
+        console.log(respuesta);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+      newAssociateList.push(associateTemp);
+    });
+  };
+
   return (
     <Layout>
       <section className="p-0 md:p-0 mx-auto max-w-9xl">
@@ -120,15 +205,21 @@ const AssociatesPage = () => {
                   <IoIosAddCircle />
                   Registrar
                 </Button>
-                <Button
-                  onClick={() => {
-                    router.push("/app/associates/create");
-                  }}
-                  className=" text-white p-2 text-xs flex items-center gap-2 bg-green-600 hover:bg-green-700 "
-                >
-                  <IoIosAddCircle />
-                  Registrar con Excel
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    onClick={saveAssociates}
+                    className=" text-white p-2 text-xs flex items-center gap-2 bg-green-600 hover:bg-green-700 "
+                  >
+                    <IoIosAddCircle />
+                    Registrar con Excel
+                  </Button>
+
+                  <input className="w-60" type="file" accept=".xlsx" onChange={(e) => {
+                    if (e.target.files) {
+                      readExcel(e.target.files[0]);
+                    }
+                  }} />
+                </div>
               </div>
             </div>
 
