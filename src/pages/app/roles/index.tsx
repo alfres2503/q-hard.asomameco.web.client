@@ -1,7 +1,16 @@
+import { useMember } from "@/hooks/useAuth";
+import { useNotification } from "@/hooks/useNotification";
+import { useOrderBy } from "@/hooks/useOrderBy";
+import { usePagination } from "@/hooks/usePagination";
+import { useSearch } from "@/hooks/useSearch";
 import { GenericService } from "@/services/GenericService";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { IoIosAddCircle } from "react-icons/io";
 import Layout from "../layout";
-import { Member } from "@/types/models/Member";
+import Button from "@/components/common/Button";
+import SearchBar from "@/components/SearchBar";
 import {
   Switch,
   Table,
@@ -11,24 +20,15 @@ import {
   TableHeaderCell,
   TableRow,
 } from "@tremor/react";
-import Button from "@/components/common/Button";
-import { usePathname, useSearchParams } from "next/navigation";
-import { IoIosAddCircle } from "react-icons/io";
-import { useSearch } from "@/hooks/useSearch";
-import { usePagination } from "@/hooks/usePagination";
-import { useOrderBy } from "@/hooks/useOrderBy";
-import SearchBar from "@/components/SearchBar";
+import { Role } from "@/types/models/Role";
 import Paginator from "@/components/PaginationFooter";
-import { useNotification } from "@/hooks/useNotification";
-import { useRouter } from "next/router";
-import { useMember } from "@/hooks/useAuth";
 
-const MembersPage = () => {
+const RolesPage = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [members, setMembers] = useState([]);
+  const [roles, setRoles] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const { currentMember } = useMember();
@@ -44,7 +44,7 @@ const MembersPage = () => {
     NextPage,
     ChangePageSize,
   } = usePagination(searchTerm);
-  const { orderBy, setOrderBy, SortByName, SortByEmail, SortByActive } =
+  const { orderBy, setOrderBy, SortByName } =
     useOrderBy(pageNumber, pageSize);
 
   const { Notification } = useNotification();
@@ -75,12 +75,12 @@ const MembersPage = () => {
     // Obtener los datos de la API en base a los parametros de la URL
     const fetchData = async () => {
       try {
-        const endpoint = `members?pageNumber=${pageNumber}&pageSize=${pageSize}
+        const endpoint = `roles?pageNumber=${pageNumber}&pageSize=${pageSize}
           &searchTerm=${searchTerm}&orderBy=${orderBy}`;
           
         const response = await GenericService.list(endpoint);
 
-        setMembers(response.data.list);
+        setRoles(response.data.list);
         setTotalPages(response.data.totalPages);
       } catch (error: any) {
         Notification(`Acerca del error: ${error.message}`);
@@ -94,7 +94,7 @@ const MembersPage = () => {
   return (
     <Layout>
       <section className="p-0 md:p-0 mx-auto max-w-9xl">
-        {members.length === 0 ? (
+        {roles.length === 0 ? (
           <div className="flex items-center justify-center mt-5">
             <span className="text-lg font-bold">
               {isLoading
@@ -106,10 +106,10 @@ const MembersPage = () => {
           <div className="flex flex-col justify-center gap-10 mx-10 mt-10">
             {/* Title & add button */}
             <div className="flex items-center justify-between">
-              <h1 className="text-2xl mx-3 font-bold">Miembros</h1>
+              <h1 className="text-2xl mx-3 font-bold">Roles</h1>
               <Button
                 onClick={() => {
-                  router.push("/app/members/create");
+                  router.push("/app/roles/create");
                 }}
                 className=" text-white p-2 text-xs flex items-center gap-2"
               >
@@ -118,49 +118,39 @@ const MembersPage = () => {
               </Button>
             </div>
 
-            {/* SearchBar */}
+            {/* SearchBar 
             <SearchBar
               value={searchTerm}
               onChange={setSearchTerm}
               onSearch={() => handleSearchWithPage(pageNumber, pageSize)}
-            />
+            />*/}
 
             {/* Table */}
             <div className="w-full">
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableHeaderCell>
-                      <button onClick={SortByName}>Nombre</button>
+                  <TableHeaderCell>
+                    ID
                     </TableHeaderCell>
-
-                    <TableHeaderCell>Apellido</TableHeaderCell>
-
                     <TableHeaderCell>
-                      <button onClick={SortByEmail}>Correo</button>
-                    </TableHeaderCell>
-
-                    <TableHeaderCell>
-                      <button onClick={SortByActive}>Activo</button>
+                      <button onClick={SortByName}>Descripción</button>
                     </TableHeaderCell>
 
                     <TableHeaderCell>Acciones</TableHeaderCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {members.map((member: Member) => (
-                    <TableRow key={member.id}>
-                      <TableCell>{member.firstName}</TableCell>
-                      <TableCell>{member.lastName}</TableCell>
-                      <TableCell>{member.email}</TableCell>
-                      <TableCell>
-                        <Switch checked={member.isActive} onChange={() => {}} />
-                      </TableCell>
+                  {roles.map((role: Role) => (
+                    <TableRow key={role.id}>
+                       <TableCell>{role.id}</TableCell>
+                      <TableCell>{role.description}</TableCell>
+                    
                       <TableCell className="flex gap-3">
                         {currentMember?.idRole === 1 && (
                           <Button
                             onClick={() => {
-                              router.push(`/app/members/edit/${member.id}`);
+                              router.push(`/app/roles/edit/${role.id}`);
                             }}
                             className="text-xs text-white p-2"
                           >
@@ -170,7 +160,7 @@ const MembersPage = () => {
                         <Button
                           color="blue"
                           onClick={() => {
-                            router.push(`/app/members/${member.id}`);
+                            router.push(`/app/roles/${role.id}`);
                           }}
                           className="text-xs text-white p-2"
                         >
@@ -199,4 +189,5 @@ const MembersPage = () => {
   );
 };
 
-export default MembersPage;
+
+export default RolesPage;
