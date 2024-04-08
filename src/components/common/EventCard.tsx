@@ -6,11 +6,13 @@ import Button from "./Button";
 const EventCard: FC<EventCardProps> = ({
   onClickEdit = () => {},
   onClickAttendance = () => {},
+  onClickView = () => {},
   eventName = "Evento pichudo",
   description = "Evento pichudo solo pa amarrados",
   dateAndTime = "N/D",
   place = "N/D",
   color = "white",
+  isAdmin = false,
 }) => {
   const cardColor =
     color === "orange"
@@ -28,17 +30,27 @@ const EventCard: FC<EventCardProps> = ({
         <p className="text-gray-700 text-sm">Lugar: {place}</p>
       </div>
       <div className="px-6 py-2 flex md:flex flex-row-reverse space-x-1">
+        {isAdmin ? (
+          <button
+            onClick={onClickEdit}
+            className="inline transition-colors text-white rounded focus:outline-none px-4 py-2 mx-2 bg-asomamecoDarkBlue hover:bg-asomamecoDarkBlue-700"
+          >
+            Editar
+          </button>
+        ) : (
+          ""
+        )}
         <button
-          onClick={onClickEdit}
+          onClick={onClickView}
           className="inline transition-colors text-white rounded focus:outline-none px-4 py-2 mx-2 bg-asomamecoDarkBlue hover:bg-asomamecoDarkBlue-700"
         >
-          Editar
+          Ver
         </button>
         <button
           onClick={onClickAttendance}
-          className="inline transition-colors text-white rounded focus:outline-none px-4 py-2 bg-asomamecoDarkBlue hover:bg-asomamecoDarkBlue-700"
+          className="inline transition-colors text-white rounded focus:outline-none px-4 py-2 mx-2 bg-asomamecoDarkBlue hover:bg-asomamecoDarkBlue-700"
         >
-          Ver
+          Asistencia
         </button>
       </div>
     </div>

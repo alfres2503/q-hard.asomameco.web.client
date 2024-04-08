@@ -23,6 +23,7 @@ import SearchBar from "@/components/SearchBar";
 import Paginator from "@/components/PaginationFooter";
 import { useNotification } from "@/hooks/useNotification";
 import { useRouter } from "next/router";
+import { useMember } from "@/hooks/useAuth";
 
 const _service: GenericService = new GenericService();
 
@@ -30,6 +31,7 @@ const EventsPage = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { currentMember } = useMember();
 
   const [events, setEvents] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
@@ -154,7 +156,8 @@ const EventsPage = () => {
                 dateAndTime={_event.date + " " + _event.time}
                 place={_event.place}
                 onClickEdit={() => editEvent(_event.id)}
-                onClickAttendance={() => eventAttendance(_event.id)}
+                onClickView={() => eventView(_event.id)}
+                isAdmin={currentMember?.idRole === 1}
               ></EventCard>
             ))}
           </div>
@@ -177,7 +180,7 @@ const EventsPage = () => {
     router.push(`/app/events/edit/${id}`);
   }
 
-  function eventAttendance(id: number) {
+  function eventView(id: number) {
     router.push(`/app/events/${id}`);
   }
 };
