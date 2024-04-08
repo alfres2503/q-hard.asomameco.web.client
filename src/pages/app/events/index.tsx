@@ -157,6 +157,7 @@ const EventsPage = () => {
                 place={_event.place}
                 onClickEdit={() => editEvent(_event.id)}
                 onClickView={() => eventView(_event.id)}
+                onClickAttendance={() => eventAttendance(_event.id)}
                 isAdmin={currentMember?.idRole === 1}
               ></EventCard>
             ))}
@@ -182,6 +183,10 @@ const EventsPage = () => {
 
   function eventView(id: number) {
     router.push(`/app/events/${id}`);
+  }
+
+  function eventAttendance(id: number) {
+    router.push(`/app/attendance/${id}`);
   }
 };
 
