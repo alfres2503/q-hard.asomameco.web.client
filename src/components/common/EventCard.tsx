@@ -20,7 +20,7 @@ const EventCard: FC<EventCardProps> = ({
       : "bg-white text-gray-800";
 
   return (
-    <div className="rounded overflow-auto shadow-lg flex flex-col bg-white">
+    <div className="rounded overflow-auto shadow-lg flex flex-col bg-slate-200">
       <div className="px-6 py-4 flex-grow">
         <p className="text-lg">{eventName}</p>
         <p className="text-gray-900 text-sm">{description}</p>

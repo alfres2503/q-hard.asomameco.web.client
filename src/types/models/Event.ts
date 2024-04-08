@@ -9,5 +9,6 @@ export interface Event {
     time: string;
     place: string;
     member?: Member;
+    idCateringService: number;
   }
   
