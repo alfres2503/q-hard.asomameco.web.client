@@ -21,7 +21,7 @@ const EventsPage = () => {
       const response = await GenericService.list(
         `events?pageNumber=${pageNumber}&pageSize=${pageSize}`
       );
-      setEvents(response.data);
+      setEvents(response.data.list);
     } catch (error) {
       console.log(error);
     }
