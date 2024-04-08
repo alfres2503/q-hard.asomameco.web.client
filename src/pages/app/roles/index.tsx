@@ -118,12 +118,12 @@ const RolesPage = () => {
               </Button>
             </div>
 
-            {/* SearchBar 
+            {/* SearchBar */}
             <SearchBar
               value={searchTerm}
               onChange={setSearchTerm}
               onSearch={() => handleSearchWithPage(pageNumber, pageSize)}
-            />*/}
+            />
 
             {/* Table */}
             <div className="w-full">

@@ -25,7 +25,7 @@ const EditRole = () => {
 
   useEffect(() => {
     try {
-        const fetchData = async () => {
+        const fetchRole = async () => {
             const response = await GenericService.getBy("roles", router.query.id);
 
             if (response.status !== 200) {
@@ -38,7 +38,7 @@ const EditRole = () => {
             setRole(response.data);
         };
 
-        fetchData();
+        fetchRole();
         
     } catch (error: any) {
         setIsLoading(false);
@@ -50,7 +50,7 @@ const EditRole = () => {
   const handleSubmit = async (values: any) => {
     try {
         setIsLoading(true);
-        const response = await GenericService.update("roles",values);
+        const response = await GenericService.update("roles", values);
 
           if (response.status !== 202) {
                 Notification(response.message);
@@ -66,6 +66,7 @@ const EditRole = () => {
     }
   };
 
+
   return(
     <Layout>
         <section className="p-0 md:p-0  max-w-9xl flex flex-col justify-center gap-5 mx-10 mt-10">
@@ -76,10 +77,12 @@ const EditRole = () => {
 
         <Formik
           initialValues={{
-            description: "",
+            id: role?.id,
+            description: role?.description,
           }}
           validationSchema={validationSchema}
-          onSubmit={async (values) => handleSubmit(values)}
+          onSubmit={(values) => handleSubmit(values)}
+          enableReinitialize
         >
           {({ errors, touched }) => (
             <Form>
@@ -88,7 +91,7 @@ const EditRole = () => {
                   <MdDriveFileRenameOutline className="text-gray-300 m-4 block"></MdDriveFileRenameOutline>
                   <Field
                     type="text"
-                    name="descripction"
+                    name="description"
                     placeholder=" Descripción"
                     className="w-[95%] p-3 pl-1 text-lg rounded-lg focus:outline-none border-0 border-gray-300 placeholder-gray-300"
                   />

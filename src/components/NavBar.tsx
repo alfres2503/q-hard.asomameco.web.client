@@ -16,6 +16,7 @@ const navigation = [
   { name: "Eventos", href: "/app/events" },
   { name: "Asociados", href: "/app/associates" },
   { name: "Catering Service", href: "/app/cateringservices" },
+  { name: "Roles", href: "/app/roles" },
 ];
 
 function classNames(...classes: string[]) {

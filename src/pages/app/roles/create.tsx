@@ -58,7 +58,7 @@ const CreateRole = () => {
                   <MdDriveFileRenameOutline className="text-gray-300 m-4 block"></MdDriveFileRenameOutline>
                   <Field
                     type="text"
-                    name="descripction"
+                    name="description"
                     placeholder=" Descripción"
                     className="w-[95%] p-3 pl-1 text-lg rounded-lg focus:outline-none border-0 border-gray-300 placeholder-gray-300"
                   />
