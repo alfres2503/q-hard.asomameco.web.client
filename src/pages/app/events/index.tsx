@@ -178,7 +178,7 @@ const EventsPage = () => {
   }
 
   function eventAttendance(id: number) {
-    alert("Asistencia del evento número: " + id);
+    router.push(`/app/events/${id}`);
   }
 };
 
