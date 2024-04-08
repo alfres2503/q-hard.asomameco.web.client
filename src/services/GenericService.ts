@@ -15,7 +15,7 @@ export class GenericService {
     endpoint: string,
     filter: any
   ): Promise<any | any[]> {
-    console.log(this.APIUrl + endpoint);
+    console.log(this.APIUrl + endpoint + "/" + filter);
     return await axios.get(this.APIUrl + endpoint + "/" + filter);
   }
 

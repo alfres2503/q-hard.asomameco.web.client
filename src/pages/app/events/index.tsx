@@ -23,7 +23,6 @@ import SearchBar from "@/components/SearchBar";
 import Paginator from "@/components/PaginationFooter";
 import { useNotification } from "@/hooks/useNotification";
 import { useRouter } from "next/router";
-import { useMember } from "@/hooks/useAuth";
 
 const _service: GenericService = new GenericService();
 
@@ -84,7 +83,8 @@ const EventsPage = () => {
   async function loadEvents() {
     try {
       const response = await GenericService.list(
-        `events?pageNumber=${pageNumber}&pageSize=${pageSize}`
+        `events?pageNumber=${pageNumber}&pageSize=${pageSize}
+        &searchTerm=${searchTerm}&orderBy=${orderBy}`
       );
       setEvents(response.data.list);
       setTotalPages(response.data.totalPages);
@@ -94,10 +94,9 @@ const EventsPage = () => {
     }
   }
 
-  async function getCateringName(id: number){
+  async function getCateringName(id: number) {
     try {
-      const response = await GenericService.getBy("cateringservices/", id
-      );
+      const response = await GenericService.getBy("cateringservices/", id);
       return response.name;
     } catch (error: any) {
       console.log(error);
@@ -107,67 +106,75 @@ const EventsPage = () => {
 
   return (
     <Layout>
-        {events.length === 0 ? (
-          <div className="flex items-center justify-center mt-5">
-            <span className="text-lg font-bold">
-              {isLoading
-                ? "Cargando..."
-                : "Parece que hubo un error, por favor intentelo más tarde."}
-            </span>
-          </div>
-        ) : (
-          <div className="flex flex-col justify-center gap-10 mx-10 mt-10">
-            {/* Title & add button */}
-            <div className="flex items-center justify-between">
-              <h1 className="text-2xl mx-3 font-bold">Eventos</h1>
-              <Button
-                onClick={() => {
-                  router.push("/app/events/create");
-                }}
-                className=" text-white p-2 text-xs flex items-center gap-2"
-              >
-                <IoIosAddCircle />
-                Nuevo evento
-              </Button>
-            </div>
+      <div className="flex flex-col justify-center gap-10 mx-10 mt-10">
+        {/* Title & add button */}
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl mx-3 font-bold">Eventos</h1>
+          <Button
+            onClick={() => {
+              router.push("/app/events/create");
+            }}
+            className=" text-white p-2 text-xs flex items-center gap-2"
+          >
+            <IoIosAddCircle />
+            Nuevo evento
+          </Button>
+        </div>
+          {/* SearchBar */}
+          <SearchBar
+            value={searchTerm}
+            onChange={setSearchTerm}
+            onSearch={() => handleSearchWithPage(pageNumber, pageSize)}
+          />
+      </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-              {/* <EventCard
+      {events.length === 0 ? (
+        <div className="flex items-center justify-center mt-5">
+          <span className="text-lg font-bold">
+            {isLoading
+              ? "Cargando..."
+              : "Parece que hubo un error, por favor intentelo más tarde."}
+          </span>
+        </div>
+      ) : (
+        <div className="flex flex-col justify-center gap-10 mx-10 mt-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            {/* <EventCard
           eventName="Parrillada de Hombres"
           description="Vuelve a tomar el control de la parrilla."
           dateAndTime="El 27 a las 8"
           place="Donde Charlie"
         ></EventCard> */}
 
-              {events.map((_event: Event) => (
-                <EventCard
-                  key={_event.id}
-                  eventName={_event.name}
-                  description={_event.description}
-                  dateAndTime={_event.date + " " + _event.time}
-                  place={_event.place}
-                  onClickEdit={() => editEvent(_event.id)}
-                  onClickAttendance={() => eventAttendance(_event.id)}
-                ></EventCard>
-              ))}
-            </div>
-
-            {/* Pagination */}
-            <Paginator
-                pageNumber={pageNumber}
-                totalPages={totalPages}
-                PreviousPage={PreviousPage}
-                NextPage={NextPage}
-                orderBy={orderBy}
-                ChangePageSize={ChangePageSize}
-              />
+            {events.map((_event: Event) => (
+              <EventCard
+                key={_event.id}
+                eventName={_event.name}
+                description={_event.description}
+                dateAndTime={_event.date + " " + _event.time}
+                place={_event.place}
+                onClickEdit={() => editEvent(_event.id)}
+                onClickAttendance={() => eventAttendance(_event.id)}
+              ></EventCard>
+            ))}
           </div>
-        )}
+
+          {/* Pagination */}
+          <Paginator
+            pageNumber={pageNumber}
+            totalPages={totalPages}
+            PreviousPage={PreviousPage}
+            NextPage={NextPage}
+            orderBy={orderBy}
+            ChangePageSize={ChangePageSize}
+          />
+        </div>
+      )}
     </Layout>
   );
 
   function editEvent(id: number) {
-    alert("Editando el evento número: " + id);
+    router.push(`/app/events/edit/${id}`);
   }
 
   function eventAttendance(id: number) {
