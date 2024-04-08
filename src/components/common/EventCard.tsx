@@ -38,7 +38,7 @@ const EventCard: FC<EventCardProps> = ({
           onClick={onClickAttendance}
           className="inline transition-colors text-white rounded focus:outline-none px-4 py-2 bg-asomamecoDarkBlue hover:bg-asomamecoDarkBlue-700"
         >
-          Asistencia
+          Ver
         </button>
       </div>
     </div>
