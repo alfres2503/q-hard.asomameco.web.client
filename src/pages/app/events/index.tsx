@@ -186,7 +186,7 @@ const EventsPage = () => {
   }
 
   function eventAttendance(id: number) {
-    router.push(`/app/attendance/${id}`);
+    router.push(`/app/attendance/event/${id}`);
   }
 };
 
