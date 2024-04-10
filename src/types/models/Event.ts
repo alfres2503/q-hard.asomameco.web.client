@@ -1,3 +1,4 @@
+import { CateringService } from "./CateringService";
 import { Member } from "./Member";
 
 export interface Event {
@@ -9,5 +10,7 @@ export interface Event {
     time: string;
     place: string;
     member?: Member;
+    idCateringService: number;
+    cateringService?: CateringService;
   }
   
