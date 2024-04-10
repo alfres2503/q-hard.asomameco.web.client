@@ -1,6 +1,12 @@
+import { useNotification } from "@/hooks/useNotification";
 import { GenericService } from "@/services/GenericService";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import Layout from "../layout";
+import Layout from "../../layout";
+import Button from "@/components/common/Button";
+import { Attendance } from "@/types/models/Attendance";
+import { IoIosAddCircle } from "react-icons/io";
+import SearchBar from "@/components/SearchBar";
 import {
   Switch,
   Table,
@@ -10,28 +16,20 @@ import {
   TableHeaderCell,
   TableRow,
 } from "@tremor/react";
-import Button from "@/components/common/Button";
 import { usePathname, useSearchParams } from "next/navigation";
-import { IoIosAddCircle } from "react-icons/io";
 import { useSearch } from "@/hooks/useSearch";
 import { usePagination } from "@/hooks/usePagination";
 import { useOrderBy } from "@/hooks/useOrderBy";
 import Paginator from "@/components/PaginationFooter";
-import { useNotification } from "@/hooks/useNotification";
-import { useRouter } from "next/router";
-import { useMember } from "@/hooks/useAuth";
-import { Attendance } from "@/types/models/Attendance";
-import SearchBar from "@/components/SearchBar";
 
-const AttendancesPage = () => {
+const AttendanceDetails = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
+  const [attendance, setAttendance] = useState<Attendance>();
   const [attendances, setAttendances] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const { currentMember } = useMember();
 
   // Hooks para la busqueda, paginacion y ordenamiento, son reutilizables para otras paginas
   const { searchTerm, setSearchTerm, handleSearchWithPage } = useSearch();
@@ -49,48 +47,48 @@ const AttendancesPage = () => {
 
   const { Notification } = useNotification();
 
+  // Obtener los datos de la API en base a los parametros de la URL\
+
   useEffect(() => {
-    setIsLoading(true);
-
-    // Obtener los parametros de la URL
-    setPageNumber(
-      searchParams.has("pageNumber")
-        ? Number(searchParams.get("pageNumber"))
-        : 1
-    );
-    setPageSize(
-      searchParams.has("pageSize") ? Number(searchParams.get("pageSize")) : 5
-    );
-
-    setSearchTerm(
-      searchParams.has("searchTerm")
-        ? String(searchParams.get("searchTerm"))
-        : ""
-    );
-
-    setOrderBy(
-      searchParams.has("orderBy") ? String(searchParams.get("orderBy")) : ""
-    );
+  
+     setIsLoading(true);
 
     // Obtener los datos de la API en base a los parametros de la URL
+    try {
+  
     const fetchData = async () => {
-      try {
-        const endpoint = `attendances?pageNumber=${pageNumber}&pageSize=${pageSize}
-          &searchTerm=${searchTerm}&orderBy=${orderBy}`;
 
-        const response = await GenericService.list(endpoint);
-
-        setAttendances(response.data.list);
-        setTotalPages(response.data.totalPages);
-      } catch (error: any) {
-        Notification(`Acerca del error: ${error.message}`);
+      if (!router.query.idEvent) {
+        return;
       }
+
+      console.log(router.query.idEvent);
+      const response = await GenericService.getBy(
+        "attendances/event",
+        router.query.idEvent
+      );
+      if (response.status !== 200) {
+        Notification(response.message);
+        return;
+      }
+
+      setAttendances(response.data);
+      setTotalPages(response.data.totalPages);
+      console.log(response.data);
+
     };
 
-    fetchData();
-    setIsLoading(false);
-  }, [searchParams, pageNumber, pageSize, pathname, orderBy]);
+    if (router.isReady) {
+      fetchData();
+      setIsLoading(false);
+    }
 
+  } catch (error: any) {
+    Notification(`Acerca del error: ${error.message}`);
+  }
+}, [router.isReady, router.query.idEvent]);
+
+  // Render attendance details
   return (
     <Layout>
       <section className="p-0 md:p-0 mx-auto max-w-9xl">
@@ -107,42 +105,32 @@ const AttendancesPage = () => {
             {/* Title & add button */}
             <div className="flex items-center justify-between">
               <h1 className="text-2xl mx-3 font-bold">Asistencias</h1>
-              {[/*Se comento ya que se crean las asistencias dentro de eventos */]}
-            {/**
               <Button
                 onClick={() => {
-                  router.push(`/app/attendances/create/`);
+                  router.push(`/app/attendances/create/${router.query.idEvent}` );
                 }}
                 className=" text-white p-2 text-xs flex items-center gap-2"
               >
                 <IoIosAddCircle />
                 Registrar
-              </Button>
-             */}
-            </div>
-       
-
-            {/* SearchBar */}
+              </Button></div>
+           
+            {/* SearchBar
             <SearchBar
               value={searchTerm}
               onChange={setSearchTerm}
               onSearch={() => handleSearchWithPage(pageNumber, pageSize)}
-            />
+            />*/} 
 
             {/* Table */}
             <div className="w-full">
               <Table>
                 <TableHead>
                   <TableRow>
-
-                    <TableHeaderCell>
-                        <button onClick={SortByName}> Evento</button>
-                        </TableHeaderCell>
+                    <TableHeaderCell>Evento</TableHeaderCell>
                     <TableHeaderCell>Asociado</TableHeaderCell>
                     <TableHeaderCell>Hora de Llegada</TableHeaderCell>
-                    <TableHeaderCell>
-                        <button onClick={SortByActive}>Confirmación</button>
-                        </TableHeaderCell>
+                    <TableHeaderCell>Confirmación</TableHeaderCell>
                     <TableHeaderCell>Acciones</TableHeaderCell>
                   </TableRow>
                 </TableHead>
@@ -151,14 +139,8 @@ const AttendancesPage = () => {
                     <TableRow
                       key={attendance.idEvent}
                     >
-                      <TableCell>
-                        {
-                        attendance.event?.name}
-                      </TableCell>
-                      <TableCell>
-                        {
-                          attendance.associate?.name}
-                      </TableCell>
+                      <TableCell>{attendance.event?.name}</TableCell>
+                      <TableCell>{attendance.associate?.name}</TableCell>
                       <TableCell>{attendance.arrivalTime}</TableCell>
                       <TableCell>
                         <Switch
@@ -166,25 +148,24 @@ const AttendancesPage = () => {
                           onChange={() => {}}
                         />
                       </TableCell>
-                      <TableCell className="flex gap-3">
-                        <Button
-                          color="blue"
-                          onClick={() => {
-                            router.push(
-                              `/app/attendances/event/${attendance.idEvent}`
-                            );
-                          }}
-                          className="text-xs text-white p-2"
-                        >
-                          Detalles
-                        </Button>
-                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
+              <div className=" flex gap-3 items-center justify-start my-5">
+              
+                <Button
+                  onClick={() => {
+                    router.push("/app/events");
+                  }}
+                  color="blue"
+                  className="p-3 text-white"
+                >
+                  Volver
+                </Button>
+              </div>
 
-              {/* Pagination */}
+              {/* Pagination 
               <Paginator
                 pageNumber={pageNumber}
                 totalPages={totalPages}
@@ -192,7 +173,7 @@ const AttendancesPage = () => {
                 NextPage={NextPage}
                 orderBy={orderBy}
                 ChangePageSize={ChangePageSize}
-              />
+              />*/}
             </div>
           </div>
         )}
@@ -201,4 +182,4 @@ const AttendancesPage = () => {
   );
 };
 
-export default AttendancesPage;
+export default AttendanceDetails;

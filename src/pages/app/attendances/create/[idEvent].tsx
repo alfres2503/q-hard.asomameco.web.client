@@ -5,11 +5,11 @@ import { Event } from "@/types/models/Event";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import Layout from "../layout";
+import Layout from "../../layout";
 import { FiPlusCircle } from "react-icons/fi";
 import { Field, Form, Formik } from "formik";
-import { FaUser } from "react-icons/fa";
-import { Select, SelectItem } from "@tremor/react";
+import { FaCheck, FaUser } from "react-icons/fa";
+import { Select, SelectItem, Switch } from "@tremor/react";
 import Button from "@/components/common/Button";
 import { MdDateRange } from "react-icons/md";
 import { Attendance } from "@/types/models/Attendance";
@@ -33,20 +33,21 @@ const createAttendance = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(()=>{
-    loadEvents();
     loadAssociates();
+    
   }, []);
 
   const handleSubmit = async (values: any) => {
     try{
         setIsLoading(true);
-        values.idEvent = idEvent;
+        values.idEvent = router.query.idEvent;
         values.idAssociate = idAssociate;
         values.arrivalTime = values.arrivalTime.toString() + ":00";
+    
         console.log(values);
 
         const response = await GenericService.create("attendances", values);
-           console.log(response.message);
+           console.log(response.data);
         if (response.status !== 201) {
             Notification(response.message);
             return;
@@ -60,33 +61,22 @@ const createAttendance = () => {
     }
   }
 
-  async function loadEvents() {
-    try {
-      const response = await GenericService.list(
-        `events?pageNumber=${1}&pageSize=${999}`
-      );
-      setEvents(response.data.list);
-    } catch (error: any) {
-      Notification(`Acerca del error: ${error.message}`);
-      console.log(error);
-    }
-  }
-
   async function loadAssociates() {
     try {
       const response = await GenericService.list(
         `associates?pageNumber=${1}&pageSize=${999}`
       );
+
       setAssociates(response.data.list);
+
     } catch (error: any) {
+
       Notification(`Acerca del error: ${error.message}`);
       console.log(error);
+
     }
   }
 
-  const handleChangeEvent = async (values: any) => {
-    setIdEvent(Number(values));
-  };
   const handleChangeAssociate = async (values: any) => {
     setIdAssociate(Number(values));
   };
@@ -101,8 +91,8 @@ const createAttendance = () => {
 
       <Formik
         initialValues={{
-          idAssociate: 0,
           idEvent: 0,
+          idAssociate: 0,
           arrivalTime: "",
           isConfirmed: true,
         }}
@@ -111,7 +101,8 @@ const createAttendance = () => {
       >
         {({ errors, touched }) => (
           <Form>
-            <div className="pb-1 pt-1 flex items-center rounded-lg border-2 border-gray-300 mb-3">
+            
+              <div className="pb-1 pt-1 flex items-center rounded-lg border-2 border-gray-300 mb-3">
               <FaUser className="text-gray-300 m-4 block"></FaUser>
               <Select
                 className="w-[99%]"
@@ -128,36 +119,19 @@ const createAttendance = () => {
               </Select>
             </div>
 
-            <div className="pb-1 pt-1 flex items-center rounded-lg border-2 border-gray-300 mb-3">
-                <FaUser className="text-gray-300 m-4 block"></FaUser>
-                <Select
-                  className="w-[99%]"
-                  name="idEvent"
-                  placeholder="Evento"
-                  value={idEvent.toString() || ""}
-                  onChange={handleChangeEvent}
-                >
-                  {events.map((event: Event) => (
-                    <SelectItem value={event.id.toString()}>
-                      {event.name}
-                    </SelectItem>
-                  ))}
-                </Select>
-              </div>
-
               <div className="pb-1 pt-1 flex items-center rounded-lg border-2 border-gray-300 mb-3">
                 <MdDateRange className="text-gray-300 m-4 block"></MdDateRange>
                 <Field
                   type="time"
                   name="arrivalTime"
-                  placeholder="Hora de Llegada "
+                  placeholder="Hora de Llegada"
                   className="w-[95%] p-3 pl-1 text-lg rounded-lg focus:outline-none border-0 border-gray-300 placeholder-gray-300"
                 />
               </div>
               {errors.arrivalTime && touched.arrivalTime ? (
                 <div className="text-red-700 my-2">{errors.arrivalTime}</div>
               ) : null}
-
+             
               <div className="mt-8 flex gap-3 items-center justify-start">
                 <Button
                   onClick={() => {}}
@@ -168,7 +142,7 @@ const createAttendance = () => {
                 </Button>
                 <Button
                   onClick={() => {
-                    router.push("/app/attendances");
+                    router.push("/app/events");
                   }}
                   color="blue"
                   className="p-3 text-white"
