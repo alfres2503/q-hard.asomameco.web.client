@@ -77,7 +77,7 @@ const MembersPage = () => {
       try {
         const endpoint = `members?pageNumber=${pageNumber}&pageSize=${pageSize}
           &searchTerm=${searchTerm}&orderBy=${orderBy}`;
-          
+
         const response = await GenericService.list(endpoint);
 
         setMembers(response.data.list);
@@ -107,15 +107,26 @@ const MembersPage = () => {
             {/* Title & add button */}
             <div className="flex items-center justify-between">
               <h1 className="text-2xl mx-3 font-bold">Miembros</h1>
-              <Button
-                onClick={() => {
-                  router.push("/app/members/create");
-                }}
-                className=" text-white p-2 text-xs flex items-center gap-2"
-              >
-                <IoIosAddCircle />
-                Registrar
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  onClick={() => {
+                    router.push("/app/members/create");
+                  }}
+                  className=" text-white p-2 text-xs flex items-center gap-2"
+                >
+                  <IoIosAddCircle />
+                  Registrar
+                </Button>
+                <Button color="blue"
+                  onClick={() => {
+                    router.push("/app/roles");
+                  }}
+                  className=" text-white p-2 text-xs flex items-center gap-2"
+                >
+                  <IoIosAddCircle />
+                  Roles
+                </Button>
+              </div>
             </div>
 
             {/* SearchBar */}
@@ -154,7 +165,7 @@ const MembersPage = () => {
                       <TableCell>{member.lastName}</TableCell>
                       <TableCell>{member.email}</TableCell>
                       <TableCell>
-                        <Switch checked={member.isActive} onChange={() => {}} />
+                        <Switch checked={member.isActive} onChange={() => { }} />
                       </TableCell>
                       <TableCell className="flex gap-3">
                         {currentMember?.idRole === 1 && (

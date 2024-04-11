@@ -11,13 +11,10 @@ import { useNotification } from "@/hooks/useNotification";
 import { useRouter } from "next/router";
 
 const navigation = [
-  { name: "Panel", href: "/app" },
   { name: "Miembros", href: "/app/members" },
   { name: "Eventos", href: "/app/events" },
   { name: "Asociados", href: "/app/associates" },
   { name: "Catering Service", href: "/app/cateringservices" },
-  { name: "Asistencias", href: "/app/attendances" },
-  { name: "Roles", href: "/app/roles" },
 ];
 
 function classNames(...classes: string[]) {
@@ -51,7 +48,7 @@ const NavBar = () => {
             <div className="flex h-16 justify-between">
               <div className="flex">
                 <div className="flex flex-col justify-center flex-shrink-0 items-center relative top-2">
-                  <Link href="/">
+                  <Link href="/app">
                     <Image
                       src="/favicon.svg"
                       alt="Logo"
