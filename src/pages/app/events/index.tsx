@@ -122,12 +122,12 @@ const EventsPage = () => {
             Nuevo evento
           </Button>
         </div>
-          {/* SearchBar */}
-          <SearchBar
-            value={searchTerm}
-            onChange={setSearchTerm}
-            onSearch={() => handleSearchWithPage(pageNumber, pageSize)}
-          />
+        {/* SearchBar */}
+        <SearchBar
+          value={searchTerm}
+          onChange={setSearchTerm}
+          onSearch={() => handleSearchWithPage(pageNumber, pageSize)}
+        />
       </div>
 
       {events.length === 0 ? (
@@ -187,12 +187,13 @@ const EventsPage = () => {
 
   function eventAttendance(event: Event) {
     let date = new Date();
-    date.setDate(date.getDate() - 1);
-    if (event?.date === date.toISOString().split('T')[0]){
+
+    if (event?.date === date.toISOString().split("T")[0]) {
       router.push(`/app/attendances/create/${event.id}`);
-    } else {
-      router.push(`/app/attendances/event/${event.id}`);
+      return;
     }
+
+    router.push(`/app/attendances/event/${event.id}`);
   }
 };
 

@@ -34,32 +34,32 @@ const createAttendance = () => {
 
   useEffect(() => {
     loadAssociates();
-
   }, []);
 
   const handleSubmit = async (values: any) => {
     try {
+      console.log(values);
       setIsLoading(true);
-      
+
       values.idEvent = Number(router.query.idEvent);
       values.idAssociate = idAssociate;
       values.arrivalTime = values.arrivalTime.toString() + ":00";
       values.isConfirmed = true;
-      console.log(values);
 
       const response = await GenericService.create("attendances", values);
-      console.log(response.data);
-      if (response.status !== 201 || response.status !== 500) {
+
+      if (response.status !== 201) {
         Notification(response.message);
         return;
-      } 
+      }
 
       Notification("Asistencia creada con éxito");
+      router.push("/app/events");
     } catch (error: any) {
       setIsLoading(false);
       Notification(`Acerca del error: ${error.message}`);
     }
-  }
+  };
 
   async function loadAssociates() {
     try {
@@ -68,12 +68,9 @@ const createAttendance = () => {
       );
 
       setAssociates(response.data.list);
-
     } catch (error: any) {
-
       Notification(`Acerca del error: ${error.message}`);
       console.log(error);
-
     }
   }
 
@@ -101,7 +98,6 @@ const createAttendance = () => {
         >
           {({ errors, touched }) => (
             <Form>
-
               <div className="pb-1 pt-1 flex items-center rounded-lg border-2 border-gray-300 mb-3">
                 <FaUser className="text-gray-300 m-4 block"></FaUser>
                 <Select
@@ -134,7 +130,7 @@ const createAttendance = () => {
 
               <div className="mt-8 flex gap-3 items-center justify-start">
                 <Button
-                  onClick={() => { }}
+                  onClick={() => {}}
                   type="submit"
                   className="p-3 text-white"
                 >
@@ -156,7 +152,6 @@ const createAttendance = () => {
       </section>
     </Layout>
   );
-
 };
 
 export default createAttendance;
