@@ -13,6 +13,7 @@ import { Select, SelectItem, Switch } from "@tremor/react";
 import Button from "@/components/common/Button";
 import { MdDateRange } from "react-icons/md";
 import { Attendance } from "@/types/models/Attendance";
+import AttendanceTable from "@/components/AttendanceTable";
 
 const validationSchema = Yup.object().shape({
   idAssociate: Yup.string().required("El asociado es requerido."),
@@ -23,7 +24,7 @@ const validationSchema = Yup.object().shape({
 
 const createAttendance = () => {
   const router = useRouter();
-  const [attendances, setAttendances] = useState<Attendance>();
+  const [attendances, setAttendances] = useState<Attendance[]>();
   const [associates, setAssociates] = useState([]);
   const [events, setEvents] = useState([]);
   const [idEvent, setIdEvent] = useState(0);
@@ -33,7 +34,36 @@ const createAttendance = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    loadAssociates();
+    try {
+      const fetchData = async () => {
+        console.log("ya entré papi");
+        if (!router.query.idEvent) {
+          return;
+        }
+
+        console.log(router.query.idEvent);
+        const response = await GenericService.getBy(
+          "attendances/event",
+          router.query.idEvent
+        );
+        if (response.status !== 200) {
+          Notification(response.message);
+          return;
+        }
+
+        setAttendances(response.data);
+      };
+
+      if (router.isReady) {
+        fetchData();
+        setIsLoading(false);
+      }
+
+      fetchData();
+      loadAssociates();
+    } catch (error: any) {
+      Notification(`Acerca del error: ${error.message}`);
+    }
   }, []);
 
   const handleSubmit = async (values: any) => {
@@ -67,6 +97,7 @@ const createAttendance = () => {
         `associates?pageNumber=${1}&pageSize=${999}`
       );
 
+      console.log(response.data);
       setAssociates(response.data.list);
     } catch (error: any) {
       Notification(`Acerca del error: ${error.message}`);
@@ -149,6 +180,11 @@ const createAttendance = () => {
             </Form>
           )}
         </Formik>
+        {attendances ? (
+          <AttendanceTable attendances={attendances} />
+        ) : (
+          <p>No funca</p>
+        )}
       </section>
     </Layout>
   );

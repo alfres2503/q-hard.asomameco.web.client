@@ -21,6 +21,7 @@ import { useSearch } from "@/hooks/useSearch";
 import { usePagination } from "@/hooks/usePagination";
 import { useOrderBy } from "@/hooks/useOrderBy";
 import Paginator from "@/components/PaginationFooter";
+import AttendanceTable from "@/components/AttendanceTable";
 
 const AttendanceDetails = () => {
   const router = useRouter();
@@ -42,51 +43,48 @@ const AttendanceDetails = () => {
     NextPage,
     ChangePageSize,
   } = usePagination(searchTerm);
-  const { orderBy, setOrderBy, SortByName, SortByActive } =
-    useOrderBy(pageNumber, pageSize);
+  const { orderBy, setOrderBy, SortByName, SortByActive } = useOrderBy(
+    pageNumber,
+    pageSize
+  );
 
   const { Notification } = useNotification();
 
   // Obtener los datos de la API en base a los parametros de la URL\
 
   useEffect(() => {
-  
-     setIsLoading(true);
+    setIsLoading(true);
 
     // Obtener los datos de la API en base a los parametros de la URL
     try {
-  
-    const fetchData = async () => {
+      const fetchData = async () => {
+        if (!router.query.idEvent) {
+          return;
+        }
 
-      if (!router.query.idEvent) {
-        return;
+        console.log(router.query.idEvent);
+        const response = await GenericService.getBy(
+          "attendances/event",
+          router.query.idEvent
+        );
+        if (response.status !== 200) {
+          Notification(response.message);
+          return;
+        }
+
+        setAttendances(response.data);
+        setTotalPages(response.data.totalPages);
+        console.log(response.data);
+      };
+
+      if (router.isReady) {
+        fetchData();
+        setIsLoading(false);
       }
-
-      console.log(router.query.idEvent);
-      const response = await GenericService.getBy(
-        "attendances/event",
-        router.query.idEvent
-      );
-      if (response.status !== 200) {
-        Notification(response.message);
-        return;
-      }
-
-      setAttendances(response.data);
-      setTotalPages(response.data.totalPages);
-      console.log(response.data);
-
-    };
-
-    if (router.isReady) {
-      fetchData();
-      setIsLoading(false);
+    } catch (error: any) {
+      Notification(`Acerca del error: ${error.message}`);
     }
-
-  } catch (error: any) {
-    Notification(`Acerca del error: ${error.message}`);
-  }
-}, [router.isReady, router.query.idEvent]);
+  }, [router.isReady, router.query.idEvent]);
 
   // Render attendance details
   return (
@@ -113,35 +111,8 @@ const AttendanceDetails = () => {
             /> */}
             {/* Table */}
             <div className="w-full">
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableHeaderCell>Evento</TableHeaderCell>
-                    <TableHeaderCell>Asociado</TableHeaderCell>
-                    <TableHeaderCell>Hora de Llegada</TableHeaderCell>
-                    <TableHeaderCell>Confirmación</TableHeaderCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {attendances.map((attendance: Attendance) => (
-                    <TableRow
-                      key={attendance.idEvent}
-                    >
-                      <TableCell>{attendance.event?.name}</TableCell>
-                      <TableCell>{attendance.associate?.name}</TableCell>
-                      <TableCell>{attendance.arrivalTime}</TableCell>
-                      <TableCell>
-                        <Switch
-                          checked={attendance.isConfirmed}
-                          onChange={() => {}}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+              <AttendanceTable attendances={attendances} />
               <div className=" flex gap-3 items-center justify-start my-5">
-              
                 <Button
                   onClick={() => {
                     router.push("/app/events");
