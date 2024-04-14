@@ -157,7 +157,7 @@ const EventsPage = () => {
                 place={_event.place}
                 onClickEdit={() => editEvent(_event.id)}
                 onClickView={() => eventView(_event.id)}
-                onClickAttendance={() => eventAttendance(_event.id)}
+                onClickAttendance={() => eventAttendance(_event)}
                 isAdmin={currentMember?.idRole === 1}
               ></EventCard>
             ))}
@@ -185,8 +185,14 @@ const EventsPage = () => {
     router.push(`/app/events/${id}`);
   }
 
-  function eventAttendance(id: number) {
-    router.push(`/app/attendance/event/${id}`);
+  function eventAttendance(event: Event) {
+    let date = new Date();
+    date.setDate(date.getDate() - 1);
+    if (event?.date === date.toISOString().split('T')[0]){
+      router.push(`/app/attendances/create/${event.id}`);
+    } else {
+      router.push(`/app/attendances/event/${event.id}`);
+    }
   }
 };
 

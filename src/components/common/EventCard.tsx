@@ -5,9 +5,9 @@ import { Card } from "@tremor/react";
 
 // hay que agregar el tipo de dato de las propiedades del componente
 const EventCard: FC<EventCardProps> = ({
-  onClickEdit = () => {},
-  onClickAttendance = () => {},
-  onClickView = () => {},
+  onClickEdit = () => { },
+  onClickAttendance = () => { },
+  onClickView = () => { },
   eventName = "Evento pichudo",
   description = "Evento pichudo solo pa amarrados",
   dateAndTime = "N/D",
@@ -19,8 +19,8 @@ const EventCard: FC<EventCardProps> = ({
     color === "orange"
       ? "bg-asomamecoPrimary text-white"
       : color === "blue"
-      ? "bg-asomamecoDarkBlue text-white"
-      : "bg-white text-gray-800";
+        ? "bg-asomamecoDarkBlue text-white"
+        : "bg-white text-gray-800";
 
   return (
     <Card className="w-full">
@@ -32,12 +32,13 @@ const EventCard: FC<EventCardProps> = ({
       </div>
       <div className="px-6 py-2 flex md:flex flex-row-reverse space-x-1">
         {isAdmin ? (
+
           <Button color="blue"
-          onClick={onClickEdit}
-          className=" text-white p-2 text-xs flex items-center gap-2 ml-1"
-        >
-          Editar
-        </Button>
+            onClick={onClickEdit}
+            className=" text-white p-2 text-xs flex items-center gap-2 ml-1"
+          >
+            Editar
+          </Button>
         ) : (
           ""
         )}

@@ -113,7 +113,7 @@ const createAttendance = () => {
               >
                 {associates.map((associate: Associate) => (
                   <SelectItem value={associate.id.toString()}>
-                    {associate.name}
+                    {associate.idCard} - {associate.name}
                   </SelectItem>
                 ))}
               </Select>
