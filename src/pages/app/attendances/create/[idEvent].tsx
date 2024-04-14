@@ -13,6 +13,7 @@ import { Select, SelectItem, Switch } from "@tremor/react";
 import Button from "@/components/common/Button";
 import { MdDateRange } from "react-icons/md";
 import { Attendance } from "@/types/models/Attendance";
+import AttendanceTable from "@/components/AttendanceTable";
 
 const validationSchema = Yup.object().shape({
   idAssociate: Yup.string().required("El asociado es requerido."),
@@ -23,57 +24,82 @@ const validationSchema = Yup.object().shape({
 
 const createAttendance = () => {
   const router = useRouter();
-  const [attendances, setAttendances] = useState<Attendance>();
+  const [attendances, setAttendances] = useState<Attendance[]>([]);
   const [associates, setAssociates] = useState([]);
-  const [events, setEvents] = useState([]);
-  const [idEvent, setIdEvent] = useState(0);
   const [idAssociate, setIdAssociate] = useState(0);
   const { Notification } = useNotification();
 
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    loadAssociates();
+    if(router.isReady){
+      setIsLoading(true);
+      loadAttendances();
+      loadAssociates();
+    }
+  }, [router.isReady]);
 
-  }, []);
+  async function loadAttendances() {
+    try {
+      if (!router.query.idEvent) {
+        return;
+      }
+
+      const response = await GenericService.getBy(
+        "attendances/event",
+        router.query.idEvent
+      );
+
+      if (response.status !== 200) {
+        Notification(response.message);
+        setIsLoading(false);
+        return;
+      }
+      
+      setAttendances(response.data);
+      setIsLoading(false);
+
+    } catch (error: any) {
+      Notification(`Acerca del error: ${error.message}`);
+      console.log(error);
+      setIsLoading(false);
+    }
+  }
 
   const handleSubmit = async (values: any) => {
     try {
+      console.log(values);
       setIsLoading(true);
-      
+
       values.idEvent = Number(router.query.idEvent);
       values.idAssociate = idAssociate;
       values.arrivalTime = values.arrivalTime.toString() + ":00";
       values.isConfirmed = true;
-      console.log(values);
 
       const response = await GenericService.create("attendances", values);
-      console.log(response.data);
-      if (response.status !== 201 || response.status !== 500) {
+
+      if (response.status !== 201) {
         Notification(response.message);
         return;
-      } 
+      }
 
       Notification("Asistencia creada con éxito");
+      loadAttendances();
     } catch (error: any) {
       setIsLoading(false);
       Notification(`Acerca del error: ${error.message}`);
     }
-  }
+  };
 
   async function loadAssociates() {
     try {
       const response = await GenericService.list(
         `associates?pageNumber=${1}&pageSize=${999}`
       );
-
       setAssociates(response.data.list);
-
     } catch (error: any) {
-
       Notification(`Acerca del error: ${error.message}`);
       console.log(error);
-
     }
   }
 
@@ -101,7 +127,6 @@ const createAttendance = () => {
         >
           {({ errors, touched }) => (
             <Form>
-
               <div className="pb-1 pt-1 flex items-center rounded-lg border-2 border-gray-300 mb-3">
                 <FaUser className="text-gray-300 m-4 block"></FaUser>
                 <Select
@@ -140,23 +165,32 @@ const createAttendance = () => {
                 >
                   {isLoading ? "Cargando..." : "Crear Asistencia"}
                 </Button>
-                <Button
-                  onClick={() => {
-                    router.push("/app/events");
-                  }}
-                  color="blue"
-                  className="p-3 text-white"
-                >
-                  Volver a la lista
-                </Button>
               </div>
             </Form>
           )}
         </Formik>
+        <div>
+          <div className='mt-8'>
+            {attendances.length !== 0 ?(
+              <AttendanceTable data={attendances} />
+            ) : "No se han registrado asistencias."}
+          </div>
+          <div className="mt-8 flex gap-3 items-center justify-start">
+            <Button
+              onClick={() => {
+                router.push("/app/events");
+              }}
+              color="blue"
+              className="p-3 text-white"
+            >
+              Volver
+            </Button>
+          </div>
+
+        </div>
       </section>
     </Layout>
   );
-
 };
 
 export default createAttendance;

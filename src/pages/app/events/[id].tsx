@@ -131,7 +131,7 @@ const EventDetails = () => {
                   )}
                   <Button
                     onClick={() => {
-                      router.push("/app/attendance/" + _event.id);
+                      router.push("/app/attendances/event/" + _event.id);
                     }}
                     color="blue"
                     className="p-3 text-white"

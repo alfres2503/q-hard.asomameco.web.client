@@ -6,5 +6,7 @@ export interface Attendance {
     arrivalTime: string,
     isConfirmed: boolean
     associate?: Associate,
-    event?: Event;
+    event?: {
+        name: string;
+      };
 }
