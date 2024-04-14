@@ -13,6 +13,7 @@ import { Select, SelectItem, Switch } from "@tremor/react";
 import Button from "@/components/common/Button";
 import { MdDateRange } from "react-icons/md";
 import { Attendance } from "@/types/models/Attendance";
+import AttendanceTable from "@/components/AttendanceTable";
 
 const validationSchema = Yup.object().shape({
   idAssociate: Yup.string().required("El asociado es requerido."),
@@ -23,18 +24,40 @@ const validationSchema = Yup.object().shape({
 
 const createAttendance = () => {
   const router = useRouter();
-  const [attendances, setAttendances] = useState<Attendance>();
+  const [attendances, setAttendances] = useState<Attendance[] | undefined>();
   const [associates, setAssociates] = useState([]);
-  const [events, setEvents] = useState([]);
-  const [idEvent, setIdEvent] = useState(0);
   const [idAssociate, setIdAssociate] = useState(0);
   const { Notification } = useNotification();
 
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    loadAttendances();
     loadAssociates();
   }, []);
+
+  async function loadAttendances() {
+    try {
+      if (!router.query.idEvent) {
+        return;
+      }
+
+      const response = await GenericService.getBy(
+        "attendances/event",
+        router.query.idEvent
+      );
+      if (response.status !== 200) {
+        Notification(response.message);
+        return;
+      }
+      
+      console.log(response.data);
+      setAttendances(response.data.list);
+    } catch (error: any) {
+      Notification(`Acerca del error: ${error.message}`);
+      console.log(error);
+    }
+  }
 
   const handleSubmit = async (values: any) => {
     try {
@@ -66,7 +89,6 @@ const createAttendance = () => {
       const response = await GenericService.list(
         `associates?pageNumber=${1}&pageSize=${999}`
       );
-
       setAssociates(response.data.list);
     } catch (error: any) {
       Notification(`Acerca del error: ${error.message}`);
@@ -130,25 +152,35 @@ const createAttendance = () => {
 
               <div className="mt-8 flex gap-3 items-center justify-start">
                 <Button
-                  onClick={() => {}}
+                  onClick={() => { }}
                   type="submit"
                   className="p-3 text-white"
                 >
                   {isLoading ? "Cargando..." : "Crear Asistencia"}
                 </Button>
-                <Button
-                  onClick={() => {
-                    router.push("/app/events");
-                  }}
-                  color="blue"
-                  className="p-3 text-white"
-                >
-                  Volver a la lista
-                </Button>
               </div>
             </Form>
           )}
         </Formik>
+        <div>
+          <div className='mt-8'>
+            {attendances ? (
+              <AttendanceTable data={attendances} />
+            ) : "no entró a la tabla :("}
+          </div>
+          <div className="mt-8 flex gap-3 items-center justify-start">
+            <Button
+              onClick={() => {
+                router.push("/app/events");
+              }}
+              color="blue"
+              className="p-3 text-white"
+            >
+              Volver
+            </Button>
+          </div>
+
+        </div>
       </section>
     </Layout>
   );

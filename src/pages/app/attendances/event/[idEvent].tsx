@@ -21,12 +21,12 @@ import { useSearch } from "@/hooks/useSearch";
 import { usePagination } from "@/hooks/usePagination";
 import { useOrderBy } from "@/hooks/useOrderBy";
 import Paginator from "@/components/PaginationFooter";
+import AttendanceTable from "@/components/AttendanceTable";
 
 const AttendanceDetails = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [attendance, setAttendance] = useState<Attendance>();
   const [attendances, setAttendances] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +62,6 @@ const AttendanceDetails = () => {
         return;
       }
 
-      console.log(router.query.idEvent);
       const response = await GenericService.getBy(
         "attendances/event",
         router.query.idEvent
@@ -74,7 +73,6 @@ const AttendanceDetails = () => {
 
       setAttendances(response.data);
       setTotalPages(response.data.totalPages);
-      console.log(response.data);
 
     };
 
@@ -113,33 +111,7 @@ const AttendanceDetails = () => {
             /> */}
             {/* Table */}
             <div className="w-full">
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableHeaderCell>Evento</TableHeaderCell>
-                    <TableHeaderCell>Asociado</TableHeaderCell>
-                    <TableHeaderCell>Hora de Llegada</TableHeaderCell>
-                    <TableHeaderCell>Confirmación</TableHeaderCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {attendances.map((attendance: Attendance) => (
-                    <TableRow
-                      key={attendance.idEvent}
-                    >
-                      <TableCell>{attendance.event?.name}</TableCell>
-                      <TableCell>{attendance.associate?.name}</TableCell>
-                      <TableCell>{attendance.arrivalTime}</TableCell>
-                      <TableCell>
-                        <Switch
-                          checked={attendance.isConfirmed}
-                          onChange={() => {}}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+              <AttendanceTable  data={attendances} />
               <div className=" flex gap-3 items-center justify-start my-5">
               
                 <Button
