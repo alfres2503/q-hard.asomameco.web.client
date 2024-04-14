@@ -2,7 +2,6 @@ import { EventCardProps } from "@/types/interfaces/EventCardProps";
 import React, { FC } from "react";
 import Button from "./Button";
 import { Card } from "@tremor/react";
-import { IoIosAddCircle } from "react-icons/io";
 
 // hay que agregar el tipo de dato de las propiedades del componente
 const EventCard: FC<EventCardProps> = ({
@@ -37,7 +36,6 @@ const EventCard: FC<EventCardProps> = ({
           onClick={onClickEdit}
           className=" text-white p-2 text-xs flex items-center gap-2 ml-1"
         >
-          <IoIosAddCircle />
           Editar
         </Button>
         ) : (
@@ -47,14 +45,12 @@ const EventCard: FC<EventCardProps> = ({
           onClick={onClickView}
           className=" text-white p-2 text-xs flex items-center gap-2"
         >
-          <IoIosAddCircle />
           Ver
         </Button>
         <Button
           onClick={onClickAttendance}
           className=" text-white p-2 text-xs flex items-center gap-2"
         >
-          <IoIosAddCircle />
           Asistencia
         </Button>
       </div>
