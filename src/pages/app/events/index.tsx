@@ -86,7 +86,7 @@ const EventsPage = () => {
     try {
       const response = await GenericService.list(
         `events?pageNumber=${pageNumber}&pageSize=${pageSize}
-        &searchTerm=${searchTerm}&orderBy=${orderBy}`
+        &searchTerm=${searchTerm}&orderBy=${"date_desc"}`
       );
       setEvents(response.data.list);
       setTotalPages(response.data.totalPages);

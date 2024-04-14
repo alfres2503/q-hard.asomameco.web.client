@@ -24,7 +24,7 @@ const validationSchema = Yup.object().shape({
 
 const createAttendance = () => {
   const router = useRouter();
-  const [attendances, setAttendances] = useState<Attendance[] | undefined>();
+  const [attendances, setAttendances] = useState<Attendance[]>([]);
   const [associates, setAssociates] = useState([]);
   const [idAssociate, setIdAssociate] = useState(0);
   const { Notification } = useNotification();
@@ -32,9 +32,12 @@ const createAttendance = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    loadAttendances();
-    loadAssociates();
-  }, []);
+    if(router.isReady){
+      setIsLoading(true);
+      loadAttendances();
+      loadAssociates();
+    }
+  }, [router.isReady]);
 
   async function loadAttendances() {
     try {
@@ -46,16 +49,20 @@ const createAttendance = () => {
         "attendances/event",
         router.query.idEvent
       );
+
       if (response.status !== 200) {
         Notification(response.message);
+        setIsLoading(false);
         return;
       }
       
-      console.log(response.data);
-      setAttendances(response.data.list);
+      setAttendances(response.data);
+      setIsLoading(false);
+
     } catch (error: any) {
       Notification(`Acerca del error: ${error.message}`);
       console.log(error);
+      setIsLoading(false);
     }
   }
 
@@ -77,7 +84,7 @@ const createAttendance = () => {
       }
 
       Notification("Asistencia creada con éxito");
-      router.push("/app/events");
+      loadAttendances();
     } catch (error: any) {
       setIsLoading(false);
       Notification(`Acerca del error: ${error.message}`);
@@ -164,9 +171,9 @@ const createAttendance = () => {
         </Formik>
         <div>
           <div className='mt-8'>
-            {attendances ? (
+            {attendances.length !== 0 ?(
               <AttendanceTable data={attendances} />
-            ) : "no entró a la tabla :("}
+            ) : "No se han registrado asistencias."}
           </div>
           <div className="mt-8 flex gap-3 items-center justify-start">
             <Button

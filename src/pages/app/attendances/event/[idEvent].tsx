@@ -27,7 +27,7 @@ const AttendanceDetails = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [attendances, setAttendances] = useState([]);
+  const [attendances, setAttendances] = useState<Attendance[]>([]);
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -70,7 +70,6 @@ const AttendanceDetails = () => {
         Notification(response.message);
         return;
       }
-
       setAttendances(response.data);
       setTotalPages(response.data.totalPages);
 
@@ -101,8 +100,9 @@ const AttendanceDetails = () => {
         ) : (
           <div className="flex flex-col justify-center gap-10 mx-10 mt-10">
             {/* Title & add button */}
-            <div className="flex items-center justify-between">
-              <h1 className="text-2xl mx-3 font-bold">Asistencias</h1>
+            <div className="items-center">
+              <h1 className="text-2xl mx-3 font-bold">Asistencias</h1> <br />
+              <h2 className="text-2l mx-3 font-bold">{attendances[0].event?.name}</h2>
             </div>
             {/* <SearchBar
               value={searchTerm}

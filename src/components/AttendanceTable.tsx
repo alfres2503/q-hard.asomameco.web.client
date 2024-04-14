@@ -12,7 +12,6 @@ const AttendanceTable: React.FC<AttendanceTableProps> = ({ data }) => {
         <Table>
                 <TableHead>
                   <TableRow>
-                    <TableHeaderCell>Evento</TableHeaderCell>
                     <TableHeaderCell>Asociado</TableHeaderCell>
                     <TableHeaderCell>Hora de Llegada</TableHeaderCell>
                     <TableHeaderCell>Confirmación</TableHeaderCell>
@@ -23,7 +22,6 @@ const AttendanceTable: React.FC<AttendanceTableProps> = ({ data }) => {
                     <TableRow
                       key={attendance.idEvent}
                     >
-                      <TableCell>{attendance.event?.name}</TableCell>
                       <TableCell>{attendance.associate?.name}</TableCell>
                       <TableCell>{attendance.arrivalTime}</TableCell>
                       <TableCell>
