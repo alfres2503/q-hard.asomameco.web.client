@@ -1,6 +1,8 @@
 import { EventCardProps } from "@/types/interfaces/EventCardProps";
 import React, { FC } from "react";
 import Button from "./Button";
+import { Card } from "@tremor/react";
+import { IoIosAddCircle } from "react-icons/io";
 
 // hay que agregar el tipo de dato de las propiedades del componente
 const EventCard: FC<EventCardProps> = ({
@@ -22,7 +24,7 @@ const EventCard: FC<EventCardProps> = ({
       : "bg-white text-gray-800";
 
   return (
-    <div className="rounded overflow-auto shadow-lg flex flex-col bg-slate-200">
+    <Card className="w-full">
       <div className="px-6 py-4 flex-grow">
         <p className="text-lg">{eventName}</p>
         <p className="text-gray-900 text-sm">{description}</p>
@@ -31,29 +33,32 @@ const EventCard: FC<EventCardProps> = ({
       </div>
       <div className="px-6 py-2 flex md:flex flex-row-reverse space-x-1">
         {isAdmin ? (
-          <button
-            onClick={onClickEdit}
-            className="inline transition-colors text-white rounded focus:outline-none px-4 py-2 mx-2 bg-asomamecoDarkBlue hover:bg-asomamecoDarkBlue-700"
-          >
-            Editar
-          </button>
+          <Button color="blue"
+          onClick={onClickEdit}
+          className=" text-white p-2 text-xs flex items-center gap-2 ml-1"
+        >
+          <IoIosAddCircle />
+          Editar
+        </Button>
         ) : (
           ""
         )}
-        <button
+        <Button
           onClick={onClickView}
-          className="inline transition-colors text-white rounded focus:outline-none px-4 py-2 mx-2 bg-asomamecoDarkBlue hover:bg-asomamecoDarkBlue-700"
+          className=" text-white p-2 text-xs flex items-center gap-2"
         >
+          <IoIosAddCircle />
           Ver
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={onClickAttendance}
-          className="inline transition-colors text-white rounded focus:outline-none px-4 py-2 mx-2 bg-asomamecoDarkBlue hover:bg-asomamecoDarkBlue-700"
+          className=" text-white p-2 text-xs flex items-center gap-2"
         >
+          <IoIosAddCircle />
           Asistencia
-        </button>
+        </Button>
       </div>
-    </div>
+    </Card>
   );
 };
 
