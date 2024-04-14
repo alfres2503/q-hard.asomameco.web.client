@@ -32,32 +32,32 @@ const createAttendance = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     loadAssociates();
-    
+
   }, []);
 
   const handleSubmit = async (values: any) => {
-    try{
-        setIsLoading(true);
-        values.idEvent = router.query.idEvent;
-        values.idAssociate = idAssociate;
-        values.arrivalTime = values.arrivalTime.toString() + ":00";
-    
-        console.log(values);
+    try {
+      setIsLoading(true);
+      
+      values.idEvent = Number(router.query.idEvent);
+      values.idAssociate = idAssociate;
+      values.arrivalTime = values.arrivalTime.toString() + ":00";
+      values.isConfirmed = true;
+      console.log(values);
 
-        const response = await GenericService.create("attendances", values);
-           console.log(response.data);
-        if (response.status !== 201) {
-            Notification(response.message);
-            return;
-          }
-          
-          Notification("Asistencia creada con éxito");
-          router.push("/app/attendances");
-        } catch (error: any) {
-          setIsLoading(false);
-          Notification(`Acerca del error: ${error.message}`);
+      const response = await GenericService.create("attendances", values);
+      console.log(response.data);
+      if (response.status !== 201 || response.status !== 500) {
+        Notification(response.message);
+        return;
+      } 
+
+      Notification("Asistencia creada con éxito");
+    } catch (error: any) {
+      setIsLoading(false);
+      Notification(`Acerca del error: ${error.message}`);
     }
   }
 
@@ -83,41 +83,41 @@ const createAttendance = () => {
 
   return (
     <Layout>
-    <section className="p-0 md:p-0  max-w-9xl flex flex-col justify-center gap-5 mx-10 mt-10">
-      <div className="flex justify-start items-center text-center gap-3 text-xl font-bold">
-        <FiPlusCircle className="mt-1" />
-        <h1 className="">Crear Asistencia</h1>
-      </div>
+      <section className="p-0 md:p-0  max-w-9xl flex flex-col justify-center gap-5 mx-10 mt-10">
+        <div className="flex justify-start items-center text-center gap-3 text-xl font-bold">
+          <FiPlusCircle className="mt-1" />
+          <h1 className="">Crear Asistencia</h1>
+        </div>
 
-      <Formik
-        initialValues={{
-          idEvent: 0,
-          idAssociate: 0,
-          arrivalTime: "",
-          isConfirmed: true,
-        }}
-        validationSchema={validationSchema}
-        onSubmit={async (values) => handleSubmit(values)}
-      >
-        {({ errors, touched }) => (
-          <Form>
-            
+        <Formik
+          initialValues={{
+            idEvent: 0,
+            idAssociate: 0,
+            arrivalTime: "",
+            isConfirmed: true,
+          }}
+          validationSchema={validationSchema}
+          onSubmit={async (values) => handleSubmit(values)}
+        >
+          {({ errors, touched }) => (
+            <Form>
+
               <div className="pb-1 pt-1 flex items-center rounded-lg border-2 border-gray-300 mb-3">
-              <FaUser className="text-gray-300 m-4 block"></FaUser>
-              <Select
-                className="w-[99%]"
-                name="idAssociate"
-                placeholder="Asociado"
-                value={idAssociate.toString() || ""}
-                onChange={handleChangeAssociate}
-              >
-                {associates.map((associate: Associate) => (
-                  <SelectItem value={associate.id.toString()}>
-                    {associate.name}
-                  </SelectItem>
-                ))}
-              </Select>
-            </div>
+                <FaUser className="text-gray-300 m-4 block"></FaUser>
+                <Select
+                  className="w-[99%]"
+                  name="idAssociate"
+                  placeholder="Asociado"
+                  value={idAssociate.toString() || ""}
+                  onChange={handleChangeAssociate}
+                >
+                  {associates.map((associate: Associate) => (
+                    <SelectItem value={associate.id.toString()}>
+                      {associate.idCard} - {associate.name}
+                    </SelectItem>
+                  ))}
+                </Select>
+              </div>
 
               <div className="pb-1 pt-1 flex items-center rounded-lg border-2 border-gray-300 mb-3">
                 <MdDateRange className="text-gray-300 m-4 block"></MdDateRange>
@@ -131,10 +131,10 @@ const createAttendance = () => {
               {errors.arrivalTime && touched.arrivalTime ? (
                 <div className="text-red-700 my-2">{errors.arrivalTime}</div>
               ) : null}
-             
+
               <div className="mt-8 flex gap-3 items-center justify-start">
                 <Button
-                  onClick={() => {}}
+                  onClick={() => { }}
                   type="submit"
                   className="p-3 text-white"
                 >
@@ -150,12 +150,12 @@ const createAttendance = () => {
                   Volver a la lista
                 </Button>
               </div>
-          </Form>
-        )}
-      </Formik>
-    </section>
-  </Layout>
-);
+            </Form>
+          )}
+        </Formik>
+      </section>
+    </Layout>
+  );
 
 };
 

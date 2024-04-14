@@ -50,7 +50,7 @@ const CreateEvent = () => {
   const handleSubmit = async (values: any) => {
     try {
       setIsLoading(true);
-      console.log(values);
+      
       values.idMember = idMember;
       values.idCateringService = idCaterine;
       values.time = values.time.toString() + ":00";

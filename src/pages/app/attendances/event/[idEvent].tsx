@@ -105,23 +105,12 @@ const AttendanceDetails = () => {
             {/* Title & add button */}
             <div className="flex items-center justify-between">
               <h1 className="text-2xl mx-3 font-bold">Asistencias</h1>
-              <Button
-                onClick={() => {
-                  router.push(`/app/attendances/create/${router.query.idEvent}` );
-                }}
-                className=" text-white p-2 text-xs flex items-center gap-2"
-              >
-                <IoIosAddCircle />
-                Registrar
-              </Button></div>
-           
-            {/* SearchBar
-            <SearchBar
+            </div>
+            {/* <SearchBar
               value={searchTerm}
               onChange={setSearchTerm}
               onSearch={() => handleSearchWithPage(pageNumber, pageSize)}
-            />*/} 
-
+            /> */}
             {/* Table */}
             <div className="w-full">
               <Table>
@@ -131,7 +120,6 @@ const AttendanceDetails = () => {
                     <TableHeaderCell>Asociado</TableHeaderCell>
                     <TableHeaderCell>Hora de Llegada</TableHeaderCell>
                     <TableHeaderCell>Confirmación</TableHeaderCell>
-                    <TableHeaderCell>Acciones</TableHeaderCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
